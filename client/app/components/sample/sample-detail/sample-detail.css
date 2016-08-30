@@ -1,0 +1,16 @@
+#mocha .test.fail pre {
+    background: gainsboro;
+}
+
+#mocha .test pre.error {
+    background: white;
+}
+
+#mocha-stats {
+    top: 200px !important;
+    right: 35px !important;
+}
+
+#mocha {
+    margin: 30px 50px;
+}

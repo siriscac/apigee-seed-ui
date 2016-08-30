@@ -1,0 +1,13 @@
+<div style="margin: 40px">
+    <md-card *ngIf="sample" class="w3-animate-top">
+        <md-card-title>{{sample.name}}</md-card-title>
+        <md-card-content>
+            {{sample.description}}
+        </md-card-content>
+        <md-card-actions align="end">
+            <button md-button (click)="runTest()">RUN</button>
+            <button md-button (click)="deploy()">DEPLOY</button>
+        </md-card-actions>
+    </md-card>
+</div>
+<div id="mocha"></div>

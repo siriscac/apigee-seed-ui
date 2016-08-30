@@ -1,0 +1,105 @@
+<md-toolbar layout-align="space-between center">
+
+    <button md-icon-button (click)="sidenav.toggle()">
+        <md-icon>menu</md-icon>
+    </button>
+    <span class="mainLogo"></span>
+    <span class="logoFont">{{title}}</span>
+    <span class="fill-remaining"></span>
+
+
+    <button md-icon-button [hidden]="authenticated" (click)="doLogin()">
+        <md-icon>account_circle</md-icon>
+        LOGIN
+    </button>
+
+    <button class="dropdown" md-icon-button [hidden]="!authenticated || isMobile" id="env-menu-right">
+        {{selectedEnv}}
+        <md-icon>keyboard_arrow_down</md-icon>
+    </button>
+
+    <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+        data-mdl-for="env-menu-right">
+        <li class="mdl-menu__item" (click)="setEnv('test')">test</li>
+        <li class="mdl-menu__item" (click)="setEnv('prod')">prod</li>
+    </ul>
+
+    <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+        data-mdl-for="org-menu-right">
+        <li class="mdl-menu__item" *ngFor="let org of orgs" (click)="setOrg(org.organization)">{{org.organization}}</li>
+    </ul>
+
+    <button class="dropdown" md-icon-button [hidden]="!authenticated || isMobile" id="org-menu-right">
+        {{selectedOrg}}
+        <md-icon>keyboard_arrow_down</md-icon>
+    </button>
+
+    <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+        data-mdl-for="org-menu-right">
+        <li class="mdl-menu__item" *ngFor="let org of orgs" (click)="setOrg(org.organization)">{{org.organization}}</li>
+    </ul>
+
+    <button [hidden]="!authenticated" md-icon-button id="menu-right" class="user-actions">
+        <md-icon>account_circle</md-icon>
+        <span *ngIf="authenticated">{{username}}</span>
+    </button>
+
+    <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+        data-mdl-for="menu-right">
+        <li disabled style="color: #675e5e; font-style: italic;" class="mdl-menu__item">{{email}}</li>
+        <li class="mdl-menu__item" (click)="doLogout()">Logout</li>
+    </ul>
+
+</md-toolbar>
+
+<div id="toast" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text"></div>
+    <button class="mdl-snackbar__action" type="button"></button>
+</div>
+
+<md-sidenav-layout class="left-navigation">
+
+    <md-sidenav #sidenav mode={{navMode}} opened="true">
+        <md-nav-list>
+
+            <a md-list-item *ngFor="let section of sections" routerLink='/{{section.href}}'>
+                <md-icon md-list-icon md-font-set="material-icons">{{section.icon}}</md-icon>
+                <span md-line>{{section.name}}</span>
+                <span md-line class="secondary">{{section.description}}</span>
+            </a>
+
+        </md-nav-list>
+    </md-sidenav>
+
+
+    <div class="mdl-layout__header-row toolbar" [hidden]="!authenticated || !isMobile">
+        <span class="fill-remaining"></span>
+
+        <button class="dropdown" style="color: #ffffff" md-icon-button id="env-menu-right-mob">
+            {{selectedEnv}}
+            <md-icon>keyboard_arrow_down</md-icon>
+        </button>
+
+        <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+            data-mdl-for="env-menu-right-mob">
+            <li class="mdl-menu__item" (click)="setEnv('test')">test</li>
+            <li class="mdl-menu__item" (click)="setEnv('prod')">prod</li>
+        </ul>
+
+        <button class="dropdown" style="color: #ffffff" md-icon-button id="org-menu-right-mob">
+            {{selectedOrg}}
+            <md-icon>keyboard_arrow_down</md-icon>
+        </button>
+
+        <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+            data-mdl-for="org-menu-right-mob">
+            <li class="mdl-menu__item" *ngFor="let org of orgs" (click)="setOrg(org.organization)">
+                {{org.organization}}
+            </li>
+        </ul>
+    </div>
+
+
+    <router-outlet></router-outlet>
+
+</md-sidenav-layout>

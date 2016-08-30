@@ -1,0 +1,37 @@
+<div class="w3-animate-opacity w3-animate-left container-padded">
+    <md-card [hidden]="!hide_form && authenticated">
+        <md-card-title>Contribution Guide</md-card-title>
+        <md-card-content [innerHTML]="contrib_guide">
+
+        </md-card-content>
+        <md-card-actions align="end">
+            <button md-button [hidden]="!authenticated" (click)="toggleGuide()">OK, GOTCHA!</button>
+            <button md-button [hidden]="authenticated" (click)="doLogin()">LOGIN TO CONTRIBUTE</button>
+        </md-card-actions>
+    </md-card>
+
+    <div class="add-box" [hidden]="show_spinner">
+        <md-card [hidden]="hide_form || !authenticated">
+            <md-card-title>Add a new Sample</md-card-title>
+            <md-card-content>
+                <form [formGroup]="sampleForm">
+                    <md-input placeholder="Name" formControlName="name" ngDefaultControl></md-input>
+                    <md-input placeholder="Description" formControlName="description" ngDefaultControl></md-input>
+                    <md-input placeholder="Git URL" formControlName="gitURL" ngDefaultControl></md-input>
+                    <md-input placeholder="API Folder" formControlName="apiFolder" ngDefaultControl></md-input>
+                </form>
+            </md-card-content>
+            <md-card-actions align="end">
+                <button md-button (click)="toggleGuide()">SHOW GUIDE</button>
+                <button md-button (click)="save()">ADD</button>
+            </md-card-actions>
+        </md-card>
+    </div>
+
+    <div class="container-padded" [hidden]="!show_spinner">
+        <div class="mdl-spinner mdl-js-spinner is-active left-center">
+        </div>
+        <h4 style="text-align:center" *ngIf="sample">Saving {{sample.name}}.. <br>It will take a while, go grab a
+            coffee!</h4>
+    </div>
+</div>

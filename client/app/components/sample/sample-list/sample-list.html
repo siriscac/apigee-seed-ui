@@ -1,0 +1,31 @@
+<div class="mdl-grid">
+
+    <div class="mdl-cell--6-col mdl-cell-4-col-tablet display-animation">
+        <div *ngFor="let sample of samples; let i = index" style="margin: 10px">
+            <md-card *ngIf="i%2 == 0" class="w3-animate-zoom" style="word-wrap: break-word">
+                <md-card-title>{{sample.displayName}}</md-card-title>
+                <md-card-content class="secondary w3-animate-opacity">
+                    {{sample.description}}
+                </md-card-content>
+                <md-card-actions align="end">
+                    <button md-button color="primary" (click)="onSelect(sample)">VIEW</button>
+                </md-card-actions>
+            </md-card>
+        </div>
+    </div>
+
+    <div class="mdl-cell--6-col mdl-cell-4-col-tablet display-animation">
+        <div *ngFor="let sample of samples; let i = index" style="margin: 10px">
+            <md-card *ngIf="i%2 != 0" class="w3-animate-zoom" style="word-wrap: break-word;">
+                <md-card-title>{{sample.displayName}}</md-card-title>
+                <md-card-content class="secondary w3-animate-opacity">
+                    {{sample.description}}
+                </md-card-content>
+                <md-card-actions align="end">
+                    <button md-button color="primary" (click)="onSelect(sample)">VIEW</button>
+                </md-card-actions>
+            </md-card>
+        </div>
+    </div>
+
+</div>

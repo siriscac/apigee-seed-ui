@@ -1,0 +1,15 @@
+md-input {
+    width: 100%;
+}
+
+.add-box {
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+@media (max-width: 1140px) {
+    .add-box {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}

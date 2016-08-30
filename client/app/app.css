@@ -1,0 +1,212 @@
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.secondary {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+body {
+    margin: 0px;
+}
+
+.logoFont {
+    font-size: large;
+    margin-top: 1.7px;
+}
+
+[md-fab] {
+    background-color: #444344;
+    position: absolute;
+    right: 3%;
+    top: 34px;
+    z-index: 1;
+}
+
+md-sidenav.md-sidenav-opening.md-sidenav-side {
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 0;
+    box-shadow: none;
+}
+
+md-sidenav.md-sidenav-opened.md-sidenav-side {
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 0;
+    box-shadow: none;
+}
+
+md-sidenav.md-sidenav-closing.md-sidenav-side {
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 0;
+    box-shadow: none;
+}
+
+md-sidenav.md-sidenav-closed.md-sidenav-side {
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 0;
+    box-shadow: none;
+}
+
+.fill-remaining {
+    flex: 1 1 auto;
+}
+
+.right-container {
+    position: absolute;
+    right: 5%;
+    top: 12px;
+}
+
+.app-spinner {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+}
+
+[md-icon-button] {
+    min-width: auto;
+    width: auto;
+}
+
+md-sidenav-layout {
+    background: rgba(0, 0, 0, 0.08);
+    height: 100%;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+md-input {
+    margin: 8px 0;
+    width: 100%;
+}
+
+md-toolbar {
+    background: #d8420d;
+    color: #ffffff;
+    padding: 0 20px;
+    -webkit-box-shadow: 0px 0.5px 2px 0px rgba(0, 0, 0, 0.57);
+    -moz-box-shadow: 0px 0.5px 2px 0px rgba(0, 0, 0, 0.57);
+    box-shadow: 0px 0.5px 2px 0px rgba(0, 0, 0, 0.57);
+}
+
+md-radio-button, md-checkbox {
+    margin: 16px 8px;
+}
+
+.mainLogo {
+    background-image: url(https://enterprise.apigee.com/public/images/enterprise-sprites.svg);
+    background-repeat: no-repeat;
+    float: left;
+    height: 20px;
+    width: 60px;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    margin-top: 2px;
+    margin-left: 20px;
+    margin-right: 5px;
+}
+
+.form {
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    /* You can set flex-wrap and flex-direction individually */
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    /* tweak the where items line up on the row */
+    /* valid values are: flex-start, flex-end, space-between, space-around, stretch */
+    -webkit-align-content: space-around;
+    align-content: space-around;
+}
+
+.form md-card {
+}
+
+md-card {
+    max-width: 300px;
+    margin: 10px;
+}
+
+.card-container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    /* You can set flex-wrap and flex-direction individually */
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    /* tweak the where items line up on the row */
+    /* valid values are: flex-start, flex-end, space-between, space-around, stretch */
+    -webkit-align-content: space-around;
+    align-content: space-around;
+    margin: 30px;
+}
+
+/** The overlay-container is an invisible element which contains all individual overlays. */
+.md-overlay-container {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/** A single overlay pane. */
+.md-overlay-pane {
+    position: absolute;
+    pointer-events: auto;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.dropdown {
+    margin-right: 15px;
+    padding: 5px;
+}
+
+.dropdown:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.user-actions {
+    padding: 5px;
+}
+
+.user-actions:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.nav-mobile {
+    display: none;
+}
+
+.toolbar {
+    height: 50px;
+    background: #4a4a4a;
+}
+
+@media (max-width: 600px) {
+    .nav-desktop {
+        display: none;
+    }
+
+    .nav-mobile {
+        display: flex;
+    }
+}
+
