@@ -11,7 +11,7 @@ UI for Apigee Seed
 - Run `npm install` to install dependencies
 - Run `npm run typings-install` to install typings
 - Run your Apigee Seed registry server
-- Run `npm start` to fire up dev server
+- Run `npm client` to fire up dev server
 - For prod, do `npm client-prod`
 - [Dev] Open browser to [`http://localhost:3000`](http://localhost:3000)
 
