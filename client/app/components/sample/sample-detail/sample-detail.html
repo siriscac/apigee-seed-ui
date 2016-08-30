@@ -1,8 +1,8 @@
 <div style="margin: 40px">
     <md-card *ngIf="sample" class="w3-animate-top">
-        <md-card-title>{{sample.name}}</md-card-title>
+        <md-card-title>{{sample.displayName}}</md-card-title>
         <md-card-content>
-            {{sample.description}}
+            <div [innerHTML]="sample.long_description"></div>            
         </md-card-content>
         <md-card-actions align="end">
             <button md-button (click)="runTest()">RUN</button>

@@ -68,7 +68,7 @@ export class AddSampleComponent {
     save() {
         var data: any = this.sampleForm.value;
         this.show_spinner = true;
-        this.sample = new Sample('', '', data.name, data.description, data.gitURL, data.apiFolder, this.authService.getUserInfo(), '');
+        this.sample = new Sample('', '', data.name, data.description, '' ,data.gitURL, data.apiFolder, this.authService.getUserInfo(), '');
         this.sampleService.createSample(this.sample, function (error, data) {
             if (data) {
                 console.log(data);

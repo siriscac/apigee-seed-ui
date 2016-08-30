@@ -7,7 +7,7 @@ import {Http, Headers, Response} from "@angular/http";
 import {AuthService} from "./auth";
 
 export class Sample {
-    constructor(public id: string, public displayName: string, public name: string, public description: string, public gitURL: string, public apiFolder: string, public user: any, public addedOn: any) {
+    constructor(public id: string, public displayName: string, public name: string, public description: string, public long_description: string, public gitURL: string, public apiFolder: string, public user: any, public addedOn: any) {
     }
 }
 
@@ -34,7 +34,7 @@ export class SampleService {
             .subscribe(samples => {
                 for (let entity of samples) {
                     var sample: any = entity;
-                    Samples.push(new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.git, sample.folder, 'Apigee', sample.created));
+                    Samples.push(new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description,sample.git, sample.folder, 'Apigee', sample.created));
                 }
             }, err => {
                 console.error("Failed to fetch samples:", err);
@@ -81,7 +81,7 @@ export class SampleService {
                     var sp: Response = data;
                     var sample: any = JSON.parse(sp.text());
                     console.log(sample);
-                    Samples.push(new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.git_url, sample.api_folder, sample.user.email, sample.created));
+                    Samples.push(new Sample(sample.uuid, sample.display_name, sample.name, sample.description, '', sample.git_url, sample.api_folder, sample.user.email, sample.created));
                     callback(null, data);
                 },
                 err => {
