@@ -196,7 +196,7 @@ body {
 
 @media (max-width: 600px) {
     .container-padded {
-        padding: 10px;
+        padding: 20px;
     }
 
     .page-content {
