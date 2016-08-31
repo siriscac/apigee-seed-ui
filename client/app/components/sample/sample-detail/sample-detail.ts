@@ -34,7 +34,7 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             let id = params['id']; // (+) converts string 'id' to a number
-            this.service.getSample(id).then(sample => this.sample = sample);
+            this.service.getSample(id).then(sample => this.sample = sample);            
         });
     }
 

@@ -5,7 +5,7 @@
             <div [innerHTML]="sample.long_description"></div>            
         </md-card-content>
         <md-card-actions align="end">
-            <button md-button (click)="runTest()">RUN</button>
+            <a md-button href="{{sample.testurl}}" target="_blank">TEST</a>
             <button md-button (click)="deploy()">DEPLOY</button>
         </md-card-actions>
     </md-card>
