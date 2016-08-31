@@ -9,6 +9,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
 import {MdMenuModule} from '@angular2-material/menu';
 import {LocalStorageService} from 'angular2-localstorage/LocalStorageEmitter';
+import {MdTabsModule} from '@angular2-material/tabs';
 
 import {rootRouterConfig} from "./app.routes";
 import {AppComponent} from "./app";
@@ -27,7 +28,7 @@ import {LocationStrategy, HashLocationStrategy, PathLocationStrategy} from '@ang
 
 @NgModule({
     declarations: [AppComponent, SampleDetailComponent, SampleListComponent, AddSampleComponent, AuthTokenHandler],
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig), MdMenuModule],
+    imports: [BrowserModule, MdTabsModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig), MdMenuModule],
     providers: [AuthGuard, SampleService, AuthService, LocalStorageService, WindowService, WindowSize, {
         provide: LocationStrategy,
         useClass: HashLocationStrategy

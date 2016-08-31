@@ -8,7 +8,7 @@
                 mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
-            <h5 class="page-header" >{{title}}</h5>
+            <h5 class="page-header">{{title}}</h5>
             <div class="mdl-layout-spacer"></div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                       mdl-textfield--floating-label mdl-textfield--align-right">
@@ -88,15 +88,21 @@
         </div>
     </header>
     <div class="mdl-layout__drawer">
-
         <span class="mdl-layout-title"><a class="mainLogo"></a> Seed</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" *ngFor="let section of sections" (click)="navigateTo(section.href, section.name)" style="cursor: pointer;">
+            <a class="mdl-navigation__link" *ngFor="let section of sections"
+               (click)="navigateTo(section.href, section.name)" style="cursor: pointer;color: #424242">
                 <md-icon md-font-set="material-icons">{{section.icon}}</md-icon>
-                <span style="margin-left: 15px">{{section.name}}</span>
+                <span style="margin-left: 15px;vertical-align: middle;font-size: medium">{{section.name}}</span>
             </a>
-
         </nav>
+        <div class="bottom-links">
+            <span class="bottom-text"><a class="bottom-text" href="https://community.apigee.com" target="_blank">Community</a> - <a
+                    class="bottom-text" href="https://edge.apigee.com" target="_blank">Edge</a> - <a
+                    class="bottom-text" href="https://apigee.com/appservices/" target="_blank">Baas</a></span>
+            <br>
+            <span style="color: #aaa; font-size: smaller">© 2016 Apigee</span>
+        </div>
     </div>
     <main class="mdl-layout__content">
         <div class="{{contentClass}}">

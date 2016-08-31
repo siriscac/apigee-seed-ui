@@ -6,13 +6,24 @@
                 <div [innerHTML]="sample.description"></div>
             </md-card-content>
             <md-card-actions align="end" [hidden]="!authenticated">
-                <a md-button href="{{sample.testurl}}" target="_blank">TEST</a>
+                <!--<a md-button (click)="runTest()">TEST</a>-->
                 <button md-button (click)="deploy()">DEPLOY</button>
             </md-card-actions>
         </md-card>
     </div>
 
-    <p *ngIf="sample" [innerHTML]="sample.long_description" class="w3-animate-opacity"
-       style="padding: 35px; padding-top: 150px"></p>
+    <div *ngIf="tabs" class="w3-animate-opacity" style="padding-top: 150px">
+
+        <md-tab-group [selectedIndex]="selectedIndex">
+            <md-tab *ngFor="let tab of tabs; let i = index">
+                <template md-tab-label>{{tab.label}}</template>
+                <template md-tab-content>
+                    <p [hidden]="!tab.padding" style="padding-left: 35px; padding-right: 35px"
+                       [innerHTML]="tab.content"></p>
+                    <p [hidden]="tab.padding" [innerHTML]="tab.content"></p>
+                </template>
+            </md-tab>
+        </md-tab-group>
+    </div>
+
 </div>
-<div id="mocha"></div>

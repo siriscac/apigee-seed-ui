@@ -5,10 +5,11 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute}       from '@angular/router';
 import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
-import {Sticky} from 'ng2-sticky-kit/ng2-sticky-kit';
+import {MdTabChangeEvent} from '@angular2-material/tabs';
 
 import {Sample, SampleService}   from '../../../services/sample';
 import {AuthService} from "../../../services/auth";
+import {DomSanitizationService, SafeHtml} from "@angular/platform-browser";
 
 declare var mocha: any;
 declare var chai: any;
@@ -21,29 +22,38 @@ declare var parent: any;
     templateUrl: 'sample-detail.html',
     styleUrls: ['sample-detail.css'],
     directives: [
-        MD_CARD_DIRECTIVES,
-        Sticky
+        MD_CARD_DIRECTIVES
     ],
+    providers: [MdTabChangeEvent]
 })
 
 export class SampleDetailComponent implements OnInit, OnDestroy {
     private sample: Sample;
     private sub: any;
+    private selectedIndex: number = 0;
+    private tabs: any;
 
-    constructor(private route: ActivatedRoute, private router: Router, private service: SampleService, private authService: AuthService) {
+    constructor(private route: ActivatedRoute, private router: Router, private service: SampleService, private authService: AuthService, private _sanitizer: DomSanitizationService) {
 
     }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             let id = params['id']; // (+) converts string 'id' to a number
-            this.service.getSample(id).then(sample => this.sample = sample);
+            this.service.getSample(id).then(sample => {
+                this.sample = sample;
+                this.tabs = [
+                    {label: 'Description', content: sample.long_description, padding: true},
+                    {label: 'Deploy Logs', content: 'In progress', padding: true},
+                    {label: 'Test', content: this.testHtml, padding: false},
+                ];
+            });
         });
     }
 
     getURL() {
         //return "http://" + this.sample.org + "-" + this.sample.env + ".apigee.net/" + this.sample.id;
-        return ''
+        return '';
     }
 
     runTest() {
@@ -55,11 +65,17 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
         // // eval(testScript);
         // mocha.globals(['jQuery']);
         // mocha.run();
+        this.selectedIndex = 2;
+    }
+
+    public get testHtml(): SafeHtml {
+        var wrapper: any = '<object type="text/html" style="width:100%;height: 570px" data="' + this.sample.testURL + '"></object>';
+        return this._sanitizer.bypassSecurityTrustHtml(wrapper);
     }
 
     deploy() {
         this.service.deploy(this.sample, function (err, data) {
-            if (!err) console.log(data)
+            if (!err) console.log(data);
             else console.log('error occurred ' + err)
         })
     }

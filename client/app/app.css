@@ -15,6 +15,14 @@ body {
     padding-bottom: 5px;
 }
 
+[md-fab] {
+    background-color: #444344;
+    position: absolute;
+    right: 3%;
+    top: 34px;
+    z-index: 1;
+}
+
 .mdl-layout__header {
     background-color: #fc4c02;
 }
@@ -32,10 +40,6 @@ body {
     background: rgba(0, 0, 0, 0.05);
 }
 
-.mdl-layout-title {
-    padding-top: 5px;
-}
-
 .app-spinner {
     height: 30px;
     width: 30px;
@@ -45,6 +49,10 @@ body {
 [md-icon-button] {
     min-width: auto;
     width: auto;
+}
+
+.mdl-layout__drawer {
+    border: none;
 }
 
 md-sidenav-layout {

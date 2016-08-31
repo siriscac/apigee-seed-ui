@@ -8,7 +8,7 @@ md-grid-list {
     padding: 30px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 840px) {
     .mdl-grid {
         padding: 10px !important;
     }
