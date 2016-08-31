@@ -1,13 +1,18 @@
-<div style="margin: 40px">
-    <md-card *ngIf="sample" class="w3-animate-top">
-        <md-card-title>{{sample.displayName}}</md-card-title>
-        <md-card-content>
-            <div [innerHTML]="sample.long_description"></div>            
-        </md-card-content>
-        <md-card-actions align="end">
-            <a md-button href="{{sample.testurl}}" target="_blank">TEST</a>
-            <button md-button (click)="deploy()">DEPLOY</button>
-        </md-card-actions>
-    </md-card>
+<div>
+    <div class="sticky-card">
+        <md-card *ngIf="sample" class="w3-animate-top">
+            <md-card-title>{{sample.displayName}}</md-card-title>
+            <md-card-content>
+                <div [innerHTML]="sample.description"></div>
+            </md-card-content>
+            <md-card-actions align="end" [hidden]="!authenticated">
+                <a md-button href="{{sample.testurl}}" target="_blank">TEST</a>
+                <button md-button (click)="deploy()">DEPLOY</button>
+            </md-card-actions>
+        </md-card>
+    </div>
+
+    <p *ngIf="sample" [innerHTML]="sample.long_description" class="w3-animate-opacity"
+       style="padding: 35px; padding-top: 150px"></p>
 </div>
 <div id="mocha"></div>

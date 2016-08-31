@@ -68,19 +68,27 @@ export class AddSampleComponent {
     save() {
         var data: any = this.sampleForm.value;
         this.show_spinner = true;
-        this.sample = new Sample('', '', data.name, data.description, '' ,data.gitURL, data.apiFolder, this.authService.getUserInfo(), '');
-        this.sampleService.createSample(this.sample, function (error, data) {
+        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '');
+
+        this.sampleService.createSampleCallback = (error, data) => {
             if (data) {
                 console.log(data);
-                this.router.navigate(['/samples']);
+                this.redirectToSamples();
             } else {
                 console.log(error);
             }
-        });
+        };
+
+        this.sampleService.createSample(this.sample);
+
     }
 
     doLogin() {
         this.authService.doLogin();
+    }
+
+    redirectToSamples() {
+        this.router.navigate(['/samples']);
     }
 
     get authenticated() {

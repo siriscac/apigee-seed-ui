@@ -3,7 +3,7 @@
  */
 
 import {Injectable, EventEmitter} from "@angular/core";
-import {WindowService} from "./window.ts";
+import {WindowService} from "./window/window.ts";
 import {Http, Headers} from "@angular/http";
 import {JwtHelper} from 'angular2-jwt';
 import {LocalStorage} from "angular2-localstorage/WebStorage";

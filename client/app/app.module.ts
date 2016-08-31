@@ -14,8 +14,8 @@ import {rootRouterConfig} from "./app.routes";
 import {AppComponent} from "./app";
 import {SampleService} from "./services/sample";
 import {AuthService} from "./services/auth";
-import {WindowSize} from "./services/window-sizer";
-import {WindowService} from "./services/window";
+import {WindowSize} from "./services/window/window-sizer";
+import {WindowService} from "./services/window/window";
 import {AuthGuard} from './directives/protected';
 
 // Define the components that will be used

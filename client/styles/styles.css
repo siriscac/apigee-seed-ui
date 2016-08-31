@@ -20,6 +20,16 @@ body {
     left: 50% !important;
 }
 
+#sticky {
+}
+
+#sticky.stick {
+    margin-top: 0 !important;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
 #mocha-stats {
     position: initial !important;
     top: 200px !important;
@@ -186,7 +196,15 @@ body {
 
 @media (max-width: 600px) {
     .container-padded {
-        padding: 20px;
+        padding: 10px;
+    }
+
+    .page-content {
+        margin-top: 55px;
+    }
+
+    .page-content-lg {
+        margin-top: 0px;
     }
 }
 

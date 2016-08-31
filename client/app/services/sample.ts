@@ -7,7 +7,8 @@ import {Http, Headers, Response} from "@angular/http";
 import {AuthService} from "./auth";
 
 export class Sample {
-    public testurl: string
+    public testURL: string;
+
     constructor(public id: string, public displayName: string, public name: string, public description: string, public long_description: string, public gitURL: string, public apiFolder: string, public user: any, public addedOn: any) {
     }
 }
@@ -18,6 +19,8 @@ let samplesPromise = Promise.resolve(Samples);
 
 @Injectable()
 export class SampleService {
+
+    public createSampleCallback: {(err: string, msg: string): void;};
 
     private serverBaseURL: string = "http://localhost:5000";
 
@@ -35,11 +38,11 @@ export class SampleService {
             .subscribe(samples => {
                 for (let entity of samples) {
                     var sample: any = entity;
-                    var s =new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description,sample.git, sample.folder, 'Apigee', sample.created)
+                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git, sample.folder, 'Apigee', sample.created)
                     Samples.push(s);
-                    s.testurl = this.serverBaseURL + '/v1/o/' + this.authService.getSelectedOrg() +
-                                        '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html'
-                    
+                    s.testURL = this.serverBaseURL + '/v1/o/' + this.authService.getSelectedOrg() +
+                        '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html'
+
                 }
             }, err => {
                 console.error("Failed to fetch samples:", err);
@@ -70,11 +73,10 @@ export class SampleService {
         for (let k in body) {
             t.push(body[k]);
         }
-        console.log(t);
-        return t
+        return t;
     }
 
-    createSample(sample: Sample, callback) {
+    createSample(sample: Sample) {
         let headers = new Headers();
         headers.append('Authorization', `Bearer ${this.authService.getToken()}`);
         headers.append('Content-Type', 'application/json');
@@ -89,13 +91,13 @@ export class SampleService {
                     var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, '', sample.git_url, sample.api_folder, sample.user.email, sample.created)
                     Samples.push(s);
                     //s.testurl = 'https://' + this.authService.getSelectedOrg() + '-' + this.authService.getSelectedEnv() + '-apigee.net/'
-                    s.testurl = this.serverBaseURL + '/v1/o/' + this.authService.getSelectedOrg() +
-                                        '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html'
-                    callback(null, data);
+                    s.testURL = this.serverBaseURL + '/v1/o/' + this.authService.getSelectedOrg() +
+                        '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
+                    this.createSampleCallback(null, data.text());
                 },
                 err => {
                     console.log(err.json().message);
-                    callback(err.json(), null);
+                    this.createSampleCallback(err.json(), null);
                 });
     }
 

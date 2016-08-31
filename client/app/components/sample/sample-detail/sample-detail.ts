@@ -5,8 +5,10 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute}       from '@angular/router';
 import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
+import {Sticky} from 'ng2-sticky-kit/ng2-sticky-kit';
 
 import {Sample, SampleService}   from '../../../services/sample';
+import {AuthService} from "../../../services/auth";
 
 declare var mocha: any;
 declare var chai: any;
@@ -19,7 +21,8 @@ declare var parent: any;
     templateUrl: 'sample-detail.html',
     styleUrls: ['sample-detail.css'],
     directives: [
-        MD_CARD_DIRECTIVES
+        MD_CARD_DIRECTIVES,
+        Sticky
     ],
 })
 
@@ -27,14 +30,14 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
     private sample: Sample;
     private sub: any;
 
-    constructor(private route: ActivatedRoute, private router: Router, private service: SampleService) {
+    constructor(private route: ActivatedRoute, private router: Router, private service: SampleService, private authService: AuthService) {
 
     }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             let id = params['id']; // (+) converts string 'id' to a number
-            this.service.getSample(id).then(sample => this.sample = sample);            
+            this.service.getSample(id).then(sample => this.sample = sample);
         });
     }
 
@@ -65,4 +68,7 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
+    get authenticated() {
+        return this.authService.isAuthenticated();
+    }
 }

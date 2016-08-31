@@ -8,14 +8,14 @@ import {MdButton} from '@angular2-material/button';
 import {MdMenu} from '@angular2-material/menu';
 import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
 import {MD_LIST_DIRECTIVES} from '@angular2-material/list';
-import {ROUTER_DIRECTIVES}  from '@angular/router';
+import {ROUTER_DIRECTIVES, Router}  from '@angular/router';
 import {MdInput} from '@angular2-material/input';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
 
 import {SampleService} from "./services/sample";
 import {AuthService} from "./services/auth";
-import {WindowService} from "./services/window";
-import {WindowSize} from "./services/window-sizer";
+import {WindowService} from "./services/window/window";
+import {WindowSize} from "./services/window/window-sizer";
 
 @Component({
     selector: 'app',
@@ -36,7 +36,7 @@ import {WindowSize} from "./services/window-sizer";
 
 export class AppComponent {
     width: any;
-    title = 'Seed';
+    title = 'Samples';
 
     sections: Object[] = [
         {
@@ -53,10 +53,15 @@ export class AppComponent {
         }
     ];
 
-    constructor(private authService: AuthService, private windowSize: WindowSize) {
+    constructor(private authService: AuthService, private windowSize: WindowSize, private router:Router) {
         this.windowSize.width$.subscribe(width => {
             this.width = width
         });
+    }
+
+    navigateTo(href: string, title: string) {
+        this.title = title;
+        this.router.navigate(['/' + href]);
     }
 
     doLogin() {
@@ -97,6 +102,14 @@ export class AppComponent {
 
     get selectedEnv() {
         return this.authService.getSelectedEnv();
+    }
+
+    get contentClass() {
+        if(this.width < 800 && this.authService.isAuthenticated()){
+            return "page-content";
+        } else {
+            return "page-content-lg";
+        }
     }
 
     get navMode() {

@@ -14,3 +14,15 @@
 #mocha {
     margin: 30px 50px;
 }
+
+.sticky-card {
+    position: fixed;
+    width: 83.5%;
+}
+
+@media (max-width: 600px) {
+    .sticky-card {
+        position: fixed;
+        width: 100%;
+    }
+}
