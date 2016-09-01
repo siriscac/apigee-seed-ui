@@ -16,6 +16,7 @@ import {SampleService} from "./services/sample";
 import {AuthService} from "./services/auth";
 import {WindowService} from "./services/window/window";
 import {WindowSize} from "./services/window/window-sizer";
+import {TaskService} from "./services/task-service";
 
 @Component({
     selector: 'app',
@@ -59,7 +60,7 @@ export class AppComponent {
         }
     ];
 
-    constructor(private authService: AuthService, private windowSize: WindowSize, private router:Router) {
+    constructor(private authService: AuthService, private windowSize: WindowSize, private router:Router, private taskService: TaskService) {
         this.windowSize.width$.subscribe(width => {
             this.width = width
         });
@@ -80,6 +81,8 @@ export class AppComponent {
 
     setOrg(org: string) {
         this.authService.setSelectedOrg(org);
+        this.taskService.resetTasks();
+        this.taskService.fetchTasks();
     }
 
     setEnv(env: string) {

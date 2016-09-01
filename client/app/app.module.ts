@@ -15,6 +15,7 @@ import {rootRouterConfig} from "./app.routes";
 import {AppComponent} from "./app";
 import {SampleService} from "./services/sample";
 import {AuthService} from "./services/auth";
+import {TaskService} from "./services/task-service";
 import {WindowSize} from "./services/window/window-sizer";
 import {WindowService} from "./services/window/window";
 import {AuthGuard} from './directives/protected';
@@ -30,7 +31,7 @@ import {LocationStrategy, HashLocationStrategy, PathLocationStrategy} from '@ang
 @NgModule({
     declarations: [AppComponent, SampleDetailComponent, SampleListComponent, AddSampleComponent, TaskComponent, AuthTokenHandler],
     imports: [BrowserModule, MdTabsModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig), MdMenuModule],
-    providers: [AuthGuard, SampleService, AuthService, LocalStorageService, WindowService, WindowSize, {
+    providers: [AuthGuard, SampleService, AuthService, TaskService, LocalStorageService, WindowService, WindowSize, {
         provide: LocationStrategy,
         useClass: HashLocationStrategy
     }],
