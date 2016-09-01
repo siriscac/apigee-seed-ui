@@ -55,7 +55,7 @@ export class AppComponent {
             name: "Deployments",
             description: "List of deployments",
             icon: "device_hub",
-            href: ""
+            href: "tasks"
         }
     ];
 

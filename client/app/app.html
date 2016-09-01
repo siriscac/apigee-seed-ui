@@ -90,10 +90,20 @@
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title"><a class="mainLogo"></a> Seed</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" *ngFor="let section of sections"
-               (click)="navigateTo(section.href, section.name)" style="cursor: pointer;color: #424242">
-                <md-icon md-font-set="material-icons">{{section.icon}}</md-icon>
-                <span style="margin-left: 15px;vertical-align: middle;font-size: medium">{{section.name}}</span>
+            <a class="mdl-navigation__link"
+               (click)="navigateTo('samples', 'Samples')" style="cursor: pointer;color: #424242">
+                <md-icon md-font-set="material-icons">leak_add</md-icon>
+                <span style="margin-left: 15px;vertical-align: middle;font-size: medium">Samples</span>
+            </a>
+            <a class="mdl-navigation__link"
+               (click)="navigateTo('add', 'Contribute')" style="cursor: pointer;color: #424242">
+                <md-icon md-font-set="material-icons">create</md-icon>
+                <span style="margin-left: 15px;vertical-align: middle;font-size: medium">Contribute</span>
+            </a>
+            <a *ngIf="authenticated" class="mdl-navigation__link"
+               (click)="navigateTo('tasks', 'Tasks')" style="cursor: pointer;color: #424242">
+                <md-icon md-font-set="material-icons">device_hub</md-icon>
+                <span style="margin-left: 15px;vertical-align: middle;font-size: medium">Tasks</span>
             </a>
         </nav>
         <div class="bottom-links">

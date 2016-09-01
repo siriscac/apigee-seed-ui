@@ -7,6 +7,14 @@ body {
     margin: 0px;
 }
 
+td {
+    text-align: center !important;
+}
+
+th {
+    text-align: center !important;
+}
+
 .mdl-menu {
     max-height: 600px;
     overflow-y: auto;
@@ -231,4 +239,3 @@ md-card {
         padding-left: 55px;
     }
 }
-

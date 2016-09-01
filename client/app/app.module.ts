@@ -23,11 +23,12 @@ import {AuthGuard} from './directives/protected';
 import {SampleDetailComponent} from './components/sample/sample-detail/sample-detail';
 import {SampleListComponent} from './components/sample/sample-list/sample-list';
 import {AddSampleComponent} from './components/sample/add-sample/add-sample';
+import {TaskComponent} from "./components/tasks/tasks";
 import {AuthTokenHandler} from './components/auth/access-token-handler';
 import {LocationStrategy, HashLocationStrategy, PathLocationStrategy} from '@angular/common';
 
 @NgModule({
-    declarations: [AppComponent, SampleDetailComponent, SampleListComponent, AddSampleComponent, AuthTokenHandler],
+    declarations: [AppComponent, SampleDetailComponent, SampleListComponent, AddSampleComponent, TaskComponent, AuthTokenHandler],
     imports: [BrowserModule, MdTabsModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig), MdMenuModule],
     providers: [AuthGuard, SampleService, AuthService, LocalStorageService, WindowService, WindowSize, {
         provide: LocationStrategy,

@@ -1,0 +1,24 @@
+<table [hidden]="!authenticated" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp w3-animate-top">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Sample</th>
+            <th>Task</th>
+            <th>Author</th>
+            <th>Status</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let task of tasks">
+            <td>{{task.id}}</td>
+            <td>{{task.name}}</td>
+            <td>{{task.task}}</td>
+            <td>{{task.author}}</td>
+            <td>{{task.status}}</td>
+            <td>{{task.time | date:'mediumDate'}}, {{task.time | date:'shortTime'}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 [hidden]="authenticated" style="padding: 20px;">You need to be logged in to view this page</h3>
