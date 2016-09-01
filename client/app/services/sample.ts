@@ -21,7 +21,7 @@ let samplesPromise = Promise.resolve(Samples);
 @Injectable()
 export class SampleService {
 
-    public createSampleCallback: {(err: string, msg: string): void;};
+    public genericCallback: {(err: string, msg: string): void;};
 
     private registryURL: string = Config.registryURL;
 
@@ -50,24 +50,6 @@ export class SampleService {
             });
     }
 
-    deploy(sample: Sample, callback) {
-        let headers = new Headers();
-        headers.append('Authorization', `Bearer ${this.authService.getToken()}`);
-        let org = this.authService.getSelectedOrg();
-        let env = this.authService.getSelectedEnv();
-        console.log('deploying sample ' + sample.name);
-        var path = this.registryURL + '/o/' + org + '/e/' + env + '/samples/' + sample.id;
-        this.http.post(path, '', {headers: headers})
-            .subscribe(
-                data => {
-                    callback(null, data);
-                },
-                err => {
-                    console.log(err.json().message);
-                    callback(err.json(), null);
-                });
-    }
-
     convertArray(res: Response) {
         let body = res.json();
         var t = [];
@@ -91,14 +73,13 @@ export class SampleService {
                     console.log(sample);
                     var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, '', sample.git_url, sample.api_folder, sample.user.email, sample.created)
                     Samples.push(s);
-                    //s.testurl = 'https://' + this.authService.getSelectedOrg() + '-' + this.authService.getSelectedEnv() + '-apigee.net/'
                     s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                         '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
-                    this.createSampleCallback(null, data.text());
+                    this.genericCallback(null, data.text());
                 },
                 err => {
                     console.log(err.json().message);
-                    this.createSampleCallback(err.json(), null);
+                    this.genericCallback(err.json(), null);
                 });
     }
 

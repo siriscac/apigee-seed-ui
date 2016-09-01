@@ -10,6 +10,8 @@ import {MdTabChangeEvent} from '@angular2-material/tabs';
 import {Sample, SampleService}   from '../../../services/sample';
 import {AuthService} from "../../../services/auth";
 import {DomSanitizationService, SafeHtml} from "@angular/platform-browser";
+import {DeployService} from "../../../services/deploy";
+import {Config} from "../../../../config/config";
 
 declare var mocha: any;
 declare var chai: any;
@@ -24,7 +26,7 @@ declare var parent: any;
     directives: [
         MD_CARD_DIRECTIVES
     ],
-    providers: [MdTabChangeEvent]
+    providers: [MdTabChangeEvent, DeployService]
 })
 
 export class SampleDetailComponent implements OnInit, OnDestroy {
@@ -32,19 +34,25 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
     private sub: any;
     private selectedIndex: number = 0;
     private tabs: any;
+    private taskLog: string;
 
-    constructor(private route: ActivatedRoute, private router: Router, private service: SampleService, private authService: AuthService, private _sanitizer: DomSanitizationService) {
-
+    constructor(private route: ActivatedRoute, private router: Router, private service: SampleService, private authService: AuthService, private _sanitizer: DomSanitizationService, private deployService: DeployService) {
+        this.taskLog = "<div class=\"loader\" style=\"height: 550px\"><div class=\"loader__figure\"><\/div><div class=\"loader__label\">Deployment in progress<\/div><\/div>";
+        this.deployService.progress$.subscribe(
+            data => {
+                console.log('RESP:' + data);
+                this.taskLog = data;
+            });
     }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-            let id = params['id']; // (+) converts string 'id' to a number
+            let id = params['id'];
             this.service.getSample(id).then(sample => {
                 this.sample = sample;
                 this.tabs = [
                     {label: 'Description', content: sample.long_description, padding: true},
-                    {label: 'Deploy Logs', content: 'In progress', padding: true},
+                    {label: 'Deploy Logs', content: this.taskLogs, padding: true},
                     {label: 'Test', content: this.testHtml, padding: false},
                 ];
             });
@@ -52,32 +60,31 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
     }
 
     getURL() {
-        //return "http://" + this.sample.org + "-" + this.sample.env + ".apigee.net/" + this.sample.id;
-        return '';
+        console.log(this.sample.testURL);
+        return Config.registryURL + "/v1/o/" + this.authService.getSelectedOrg() + "/e/" + this.authService.getSelectedEnv() + "/samples/" + this.sample.name + "/tests/test.html";
     }
 
     runTest() {
-        // mocha.setup('bdd');
-        // assert = chai.assert;
-        // parent = this;
-
-        // // let testScript = 'describe(\'Testing \' + this.sample.name, function () {\r\n            describe(\'Calling \' + parent.getURL(), function () {\r\n                it(\'Make 5 API calls, only 2 should succeed\', function (done) {\r\n                    this.timeout(10000);\r\n                    async.times(5, function (n, next) {\r\n                        jQuery.ajax({\r\n                            url: parent.getURL(),\r\n                            complete: function (xhr, statusText) {\r\n                                next(null, xhr.status);\r\n                            }\r\n                        })\r\n                    }, function (cberror, codes) {\r\n                        let success_200 = 0;\r\n                        codes.forEach(function (s) {\r\n                            if (s == 200) {\r\n                                success_200 = success_200 + 1;\r\n                            }\r\n                        });\r\n                        assert.equal(2, success_200);\r\n                        done(cberror);\r\n                    })\r\n                })\r\n            })\r\n        });'
-        // // eval(testScript);
-        // mocha.globals(['jQuery']);
-        // mocha.run();
         this.selectedIndex = 2;
     }
 
-    public get testHtml(): SafeHtml {
-        var wrapper: any = '<object type="text/html" style="width:100%;height: 570px" data="' + this.sample.testURL + '"></object>';
+    get testHtml(): SafeHtml {
+        var wrapper: any = '<object type="text/html" style="width:100%;height: 570px" data="' + this.getURL() + '"></object>';
         return this._sanitizer.bypassSecurityTrustHtml(wrapper);
     }
 
+    get taskLogs() {
+        return this.deployService.getLogs().replace(/\/n/g, "<br>");
+    }
+
+
     deploy() {
-        this.service.deploy(this.sample, function (err, data) {
-            if (!err) console.log(data);
-            else console.log('error occurred ' + err)
-        })
+        this.selectedIndex = 1;
+        let org = this.authService.getSelectedOrg();
+        let env = this.authService.getSelectedEnv();
+        console.log('Deploying sample ' + this.sample.name);
+        var path = Config.registryURL + '/o/' + org + '/e/' + env + '/samples/' + this.sample.id;
+        this.deployService.deploy(path, `Bearer ${this.authService.getToken()}`).subscribe(() => {});
     }
 
     ngOnDestroy() {

@@ -71,7 +71,7 @@ export class AddSampleComponent {
         this.show_spinner = true;
         this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '');
 
-        this.sampleService.createSampleCallback = (error, data) => {
+        this.sampleService.genericCallback = (error, data) => {
             if (data) {
                 console.log(data);
                 this.redirectToSamples();

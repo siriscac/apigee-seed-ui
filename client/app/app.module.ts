@@ -37,5 +37,5 @@ import {LocationStrategy, HashLocationStrategy, PathLocationStrategy} from '@ang
 })
 
 export class AppModule {
-    
+
 }

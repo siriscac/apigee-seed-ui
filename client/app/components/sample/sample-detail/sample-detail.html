@@ -12,15 +12,35 @@
         </md-card>
     </div>
 
-    <div *ngIf="tabs" class="w3-animate-opacity" style="padding-top: 150px">
-
+    <div *ngIf="!authenticated" class="w3-animate-opacity" style="padding-top: 150px">
         <md-tab-group [selectedIndex]="selectedIndex">
-            <md-tab *ngFor="let tab of tabs; let i = index">
-                <template md-tab-label>{{tab.label}}</template>
+            <md-tab>
+                <template md-tab-label>Decription</template>
                 <template md-tab-content>
-                    <p [hidden]="!tab.padding" style="padding-left: 35px; padding-right: 35px"
-                       [innerHTML]="tab.content"></p>
-                    <p [hidden]="tab.padding" [innerHTML]="tab.content"></p>
+                    <p style="padding-left: 35px; padding-right: 35px" [innerHTML]="sample.long_description"></p>
+                </template>
+            </md-tab>
+        </md-tab-group>
+    </div>
+
+    <div *ngIf="authenticated" class="w3-animate-opacity" style="padding-top: 150px">
+        <md-tab-group [selectedIndex]="selectedIndex">
+            <md-tab>
+                <template md-tab-label>Decription</template>
+                <template md-tab-content>
+                    <p style="padding-left: 35px; padding-right: 35px" [innerHTML]="sample.long_description"></p>
+                </template>
+            </md-tab>
+            <md-tab>
+                <template md-tab-label>Task Logs</template>
+                <template md-tab-content>
+                    <p style="padding: 35px" [innerHTML]="taskLogs"></p>
+                </template>
+            </md-tab>
+            <md-tab>
+                <template md-tab-label>Test</template>
+                <template md-tab-content>
+                    <p [innerHTML]="testHtml"></p>
                 </template>
             </md-tab>
         </md-tab-group>
