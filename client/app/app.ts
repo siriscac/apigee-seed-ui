@@ -50,6 +50,12 @@ export class AppComponent {
             description: "Contribute to Apigee Seed",
             icon: "create",
             href: "add"
+        },
+        {
+            name: "Deployments",
+            description: "List of deployments",
+            icon: "device_hub",
+            href: ""
         }
     ];
 

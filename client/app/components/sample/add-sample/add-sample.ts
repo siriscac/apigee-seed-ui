@@ -12,6 +12,7 @@ import {MdInput} from '@angular2-material/input';
 
 import {AuthService} from "../../../services/auth";
 import {Sample, SampleService} from "../../../services/sample";
+import {Config} from "../../../../config/config";
 
 
 @Component({
@@ -32,7 +33,7 @@ export class AddSampleComponent {
     private show_spinner: boolean = false;
     private sample: Sample;
     private sampleForm: FormGroup;
-    private serverBaseURL: string = "http://localhost:5000";
+    private registryURL: string = Config.registryURL;
 
 
     constructor(private http: Http, private authService: AuthService, private sampleService: SampleService, private formBuilder: FormBuilder, private router: Router) {
@@ -48,7 +49,7 @@ export class AddSampleComponent {
     }
 
     getContribGuide() {
-        this.http.get(this.serverBaseURL + "/contribution-guide")
+        this.http.get(this.registryURL + "/contribution-guide")
             .subscribe(
                 data => {
                     this.contrib_guide = data.text()

@@ -3,16 +3,22 @@
  */
 
 import {Injectable, EventEmitter} from "@angular/core";
-import {WindowService} from "./window/window.ts";
 import {Http, Headers} from "@angular/http";
+
 import {JwtHelper} from 'angular2-jwt';
 import {LocalStorage} from "angular2-localstorage/WebStorage";
+
+import {Config} from "../../config/config";
+import {WindowService} from "./window/window.ts";
 
 
 @Injectable()
 export class AuthService {
-    private oAuthCallbackURL: string;
-    private oAuthTokenURL: string;
+    private oAuthCallbackURL: string = Config.oAuthCallbackURL;
+    private oAuthTokenURL: string = Config.oAuthTokenURL;
+    private registryURL: string = Config.registryURL;
+    private edgeBaseAPI: string = Config.edgeBaseAPI;
+
     private authenticated: boolean = false;
     private userInfo: any = {};
     private windowHandle: any = null;
@@ -20,9 +26,8 @@ export class AuthService {
     private expiresTimerID: any = null;
     private loopCount = 600;
     private intervalLength = 100;
+
     private jwtHelper: JwtHelper = new JwtHelper();
-    private baseURL: string = "https://api.enterprise.apigee.com/v1/users/";
-    private serverBaseURL: string = "http://localhost:5000";
     private locationWatcher = new EventEmitter();  // @TODO: switch to RxJS Subject instead of EventEmitter
 
     @LocalStorage() private token: string;
@@ -32,8 +37,6 @@ export class AuthService {
     @LocalStorage() private selectedEnv: string;
 
     constructor(private windows: WindowService, private http: Http) {
-        this.fetchConfig();
-
         var timeDiff = this.expires - (new Date().getTime());
         timeDiff = Math.round(timeDiff / 1000);
         if (timeDiff > 0) {
@@ -78,6 +81,7 @@ export class AuthService {
 
                             this.windowHandle.close();
                             this.emitAuthStatus(true);
+                            this.loginUserToRegistry();
                             this.fetchUserInfo();
                             this.fetchUserOrgs();
                         } else {
@@ -123,6 +127,20 @@ export class AuthService {
         );
     }
 
+    private loginUserToRegistry() {
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${this.token}`);
+
+        this.http.post(this.registryURL + "/user", '', {headers: headers})
+            .subscribe(
+                data => {
+                    console.log(data);
+                },
+                err => {
+                    console.log(err.json().message);
+                });
+    }
+
     private fetchUserInfo() {
         if (this.token != null) {
             let data = this.jwtHelper.decodeToken(this.token);
@@ -137,13 +155,12 @@ export class AuthService {
             var headers = new Headers();
             headers.append('Authorization', `Bearer ${this.token}`);
             //noinspection TypeScriptUnresolvedFunction
-            this.http.get(this.baseURL + this.getUserEmail() + "/userroles", {headers: headers})
+            this.http.get(this.edgeBaseAPI + "/users/" + this.getUserEmail() + "/userroles", {headers: headers})
                 .map(res => res.json())
                 .subscribe(info => {
                     this.userOrgs = info;
-
                     if (!this.selectedOrg) {
-                        this.selectedOrg = this.userOrgs[0].organization;
+                        this.selectedOrg = this.userOrgs.role[0].organization;
                         this.selectedEnv = "test";
                     }
 
@@ -154,7 +171,7 @@ export class AuthService {
     }
 
     private fetchConfig() {
-        this.http.get(this.serverBaseURL + "/ssoconfig")
+        this.http.get(this.registryURL + "/ssoconfig")
             .map(res => res.json())
             .subscribe(config => {
                 this.oAuthTokenURL = config.oAuthTokenURL;

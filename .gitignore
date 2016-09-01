@@ -23,7 +23,10 @@
 npm-debug.log
 testem.log
 /typings
-/config
+/client/config/config.ts
+/client/config/config.dev.ts
+/client/config/config.prod.ts
+
 /data
 
 # e2e

@@ -5,6 +5,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, Response} from "@angular/http";
 import {AuthService} from "./auth";
+import {Config} from "../../config/config";
 
 export class Sample {
     public testURL: string;
@@ -22,7 +23,7 @@ export class SampleService {
 
     public createSampleCallback: {(err: string, msg: string): void;};
 
-    private serverBaseURL: string = "http://localhost:5000";
+    private registryURL: string = Config.registryURL;
 
     constructor(private http: Http, private authService: AuthService) {
         samplesPromise.then(samples => {
@@ -33,14 +34,14 @@ export class SampleService {
     }
 
     fetchSamples() {
-        this.http.get(this.serverBaseURL + "/samples")
+        this.http.get(this.registryURL + "/samples")
             .map(this.convertArray)
             .subscribe(samples => {
                 for (let entity of samples) {
                     var sample: any = entity;
                     var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git, sample.folder, 'Apigee', sample.created)
                     Samples.push(s);
-                    s.testURL = this.serverBaseURL + '/v1/o/' + this.authService.getSelectedOrg() +
+                    s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                         '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html'
 
                 }
@@ -55,7 +56,7 @@ export class SampleService {
         let org = this.authService.getSelectedOrg();
         let env = this.authService.getSelectedEnv();
         console.log('deploying sample ' + sample.name);
-        var path = this.serverBaseURL + '/o/' + org + '/e/' + env + '/samples/' + sample.id;
+        var path = this.registryURL + '/o/' + org + '/e/' + env + '/samples/' + sample.id;
         this.http.post(path, '', {headers: headers})
             .subscribe(
                 data => {
@@ -82,7 +83,7 @@ export class SampleService {
         headers.append('Content-Type', 'application/json');
 
         let sampleData = JSON.stringify(sample);
-        this.http.post(this.serverBaseURL + "/samples", sampleData, {headers: headers})
+        this.http.post(this.registryURL + "/samples", sampleData, {headers: headers})
             .subscribe(
                 data => {
                     var sp: Response = data;
@@ -91,7 +92,7 @@ export class SampleService {
                     var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, '', sample.git_url, sample.api_folder, sample.user.email, sample.created)
                     Samples.push(s);
                     //s.testurl = 'https://' + this.authService.getSelectedOrg() + '-' + this.authService.getSelectedEnv() + '-apigee.net/'
-                    s.testURL = this.serverBaseURL + '/v1/o/' + this.authService.getSelectedOrg() +
+                    s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                         '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
                     this.createSampleCallback(null, data.text());
                 },

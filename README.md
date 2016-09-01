@@ -7,12 +7,12 @@ UI for Apigee Seed
 - Clone or fork this repository
 - Make sure you have [node.js](https://nodejs.org/) installed version 5+
 - Make sure you have NPM installed version 3+
-- Run `npm install -g webpack webpack-dev-server typings typescript` to install global dependencies
+- Run `npm install -g webpack webpack-dev-server typings typescript grunt` to install global dependencies
 - Run `npm install` to install dependencies
 - Run `npm run typings-install` to install typings
 - Run your Apigee Seed registry server
-- Run `npm run client` to fire up dev server
-- For prod, do `npm run client-prod`
+- Run `grunt build` to fire up dev server
+- For prod, do `grunt build:prod`
 - [Dev] Open browser to [`http://localhost:3000`](http://localhost:3000)
 
 ## Contributing
