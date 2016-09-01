@@ -77,6 +77,14 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
         return this.deployService.getLogs().replace(/\/n/g, "<br>");
     }
 
+    clean() {
+        this.selectedIndex = 1;
+        let org = this.authService.getSelectedOrg();
+        let env = this.authService.getSelectedEnv();
+        console.log('Cleaning sample ' + this.sample.name);
+        var path = Config.registryURL + '/o/' + org + '/e/' + env + '/samples/' + this.sample.id;
+        this.deployService.clean(path, `Bearer ${this.authService.getToken()}`).subscribe(() => {});
+    }
 
     deploy() {
         this.selectedIndex = 1;

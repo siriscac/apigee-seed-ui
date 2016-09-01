@@ -19,6 +19,40 @@ export class DeployService {
         }).share();
     }
 
+    public clean (url: string, token: string) : Observable<any> {
+        return Observable.create(observer => {
+
+            this.logs = "Cleanup in progress";
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+
+            for (let elt in xhr) {
+                console.log('-elt = ' + elt);
+            }
+            console.log(xhr);
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        //observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(xhr.response);
+                    }
+                }
+            };
+
+            xhr.onprogress = (event) => {
+                this.progress = event.loaded;
+                this.logs = xhr.responseText;
+                this.progressObserver.next(xhr.responseText);
+            };
+
+            xhr.open('DELETE', url, true);
+            xhr.setRequestHeader("Authorization", token);
+            xhr.send();
+        });
+    }
+
     public deploy(url: string, token: string): Observable<any> {
         return Observable.create(observer => {
 
