@@ -7,6 +7,7 @@ import {Http} from "@angular/http";
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {FORM_DIRECTIVES} from '@angular/common';
 import {Router} from "@angular/router";
+
 import {MdButton} from '@angular2-material/button';
 import {MdInput} from '@angular2-material/input';
 
@@ -69,8 +70,8 @@ export class AddSampleComponent {
     save() {
         var data: any = this.sampleForm.value;
         this.show_spinner = true;
-        
-        this.sample = new Sample('', '' , data.name,  data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '');
+
+        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '');
 
         this.sampleService.genericCallback = (error, data) => {
             if (data) {

@@ -3,9 +3,9 @@
  */
 
 import {Component, OnInit} from '@angular/core';
+
 import {AuthService} from "../../services/auth";
 import {Task, TaskService} from "../../services/task-service";
-import {ActivatedRoute} from "@angular/router";
 
 @Component({
     styleUrls: ['./tasks.css'],
@@ -15,9 +15,8 @@ import {ActivatedRoute} from "@angular/router";
 export class TaskComponent implements OnInit {
 
     private tasks: Task[];
-    private sub: any;
 
-    constructor(private authService: AuthService, private taskService: TaskService, private route: ActivatedRoute) {
+    constructor(private authService: AuthService, private taskService: TaskService) {
 
     }
 

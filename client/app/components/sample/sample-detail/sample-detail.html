@@ -3,7 +3,7 @@
         <md-card *ngIf="sample" class="w3-animate-top">
             <md-card-title>{{sample.displayName}}</md-card-title>
             <md-card-content>
-                <span style="font-style: italic;font-size: smaller;color: #777;">Added by {{sample.user.user_email}} on {{sample.addedOn | date:'mediumDate'}}, {{sample.addedOn | date:'shortTime'}}</span>
+                <span class="content-user">Added by {{sample.user.user_email}} on {{sample.addedOn | date:'mediumDate'}}, {{sample.addedOn | date:'shortTime'}}</span>
                 <div [innerHTML]="sample.description"></div>
             </md-card-content>
             <md-card-actions align="end">
@@ -19,7 +19,7 @@
             <md-tab>
                 <template md-tab-label>Description</template>
                 <template md-tab-content>
-                    <p style="padding-left: 35px; padding-right: 35px" [innerHTML]="sample.long_description"></p>
+                    <p class="card-description" [innerHTML]="sample.long_description"></p>
                 </template>
             </md-tab>
         </md-tab-group>
@@ -30,13 +30,13 @@
             <md-tab>
                 <template md-tab-label>Description</template>
                 <template md-tab-content>
-                    <p style="padding-left: 35px; padding-right: 35px" [innerHTML]="sample.long_description"></p>
+                    <p class="card-description" [innerHTML]="sample.long_description"></p>
                 </template>
             </md-tab>
             <md-tab>
                 <template md-tab-label>Task Logs</template>
                 <template md-tab-content>
-                    <p style="padding: 35px" [innerHTML]="taskLogs"></p>
+                    <p class="card-description" style="padding-top: 20px" [innerHTML]="taskLogs"></p>
                 </template>
             </md-tab>
             <md-tab>

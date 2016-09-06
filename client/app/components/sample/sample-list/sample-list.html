@@ -1,8 +1,7 @@
 <div class="mdl-grid">
-
     <div class="mdl-cell--6-col mdl-cell-4-col-tablet display-animation">
-        <div *ngFor="let sample of samples; let i = index" style="margin: 10px">
-            <md-card *ngIf="i%2 == 0" class="w3-animate-zoom" style="word-wrap: break-word">
+        <div *ngFor="let sample of samples; let i = index" class="card-container">
+            <md-card *ngIf="i%2 == 0" class="w3-animate-zoom card-content">
                 <md-card-title>{{sample.displayName}}</md-card-title>
                 <md-card-content class="secondary w3-animate-opacity">
                     {{sample.description}}
@@ -15,8 +14,8 @@
     </div>
 
     <div class="mdl-cell--6-col mdl-cell-4-col-tablet display-animation">
-        <div *ngFor="let sample of samples; let i = index" style="margin: 10px">
-            <md-card *ngIf="i%2 != 0" class="w3-animate-zoom" style="word-wrap: break-word;">
+        <div *ngFor="let sample of samples; let i = index" class="card-container">
+            <md-card *ngIf="i%2 != 0" class="w3-animate-zoom card-content">
                 <md-card-title>{{sample.displayName}}</md-card-title>
                 <md-card-content class="secondary w3-animate-opacity">
                     {{sample.description}}
@@ -27,5 +26,4 @@
             </md-card>
         </div>
     </div>
-
 </div>

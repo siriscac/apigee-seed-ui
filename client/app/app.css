@@ -15,17 +15,10 @@ body {
     padding-bottom: 5px;
 }
 
-[md-fab] {
-    background-color: #444344;
-    position: absolute;
-    right: 3%;
-    top: 34px;
-    z-index: 1;
-}
-
 .mdl-layout__header {
     background-color: #fc4c02;
 }
+
 .fill-remaining {
     flex: 1 1 auto;
 }
@@ -40,6 +33,17 @@ body {
     background: rgba(0, 0, 0, 0.05);
 }
 
+.sidenav-link {
+    cursor: pointer;
+    color: #424242 !important;
+}
+
+.sidenav-link span {
+    margin-left: 15px;
+    vertical-align: middle;
+    font-size: medium;
+}
+
 .app-spinner {
     height: 30px;
     width: 30px;
@@ -49,6 +53,11 @@ body {
 [md-icon-button] {
     min-width: auto;
     width: auto;
+}
+
+.mdl-dropdown__user {
+    color: #675e5e;
+    font-style: italic;
 }
 
 .mdl-layout__drawer {
@@ -184,6 +193,10 @@ md-card {
     position: absolute;
     margin-bottom: 10px;
     background: #4a4a4a;
+}
+
+.toolbar button {
+    color: white;
 }
 
 @media (max-width: 600px) {

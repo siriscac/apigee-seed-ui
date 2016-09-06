@@ -3,16 +3,12 @@
     <button class="mdl-snackbar__action" type="button"></button>
 </div>
 
-
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
-                mdl-layout--fixed-header">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
             <h5 class="page-header">{{title}}</h5>
             <div class="mdl-layout-spacer"></div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                      mdl-textfield--floating-label mdl-textfield--align-right">
-
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
                 <button md-icon-button [hidden]="authenticated" (click)="doLogin()">
                     <md-icon>account_circle</md-icon>
                     LOGIN
@@ -53,16 +49,15 @@
                     <span *ngIf="authenticated">{{username}}</span>
                 </button>
 
-                <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                    data-mdl-for="menu-right">
-                    <li disabled style="color: #675e5e; font-style: italic;" class="mdl-menu__item">{{email}}</li>
+                <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" data-mdl-for="menu-right">
+                    <li disabled class="mdl-menu__item mdl-dropdown__user">{{email}}</li>
                     <li class="mdl-menu__item" (click)="doLogout()">Logout</li>
                 </ul>
             </div>
             <div class="mdl-layout__header-row toolbar" [hidden]="!authenticated || !isMobile">
                 <span class="fill-remaining"></span>
 
-                <button class="dropdown" style="color: #ffffff" md-icon-button id="env-menu-right-mob">
+                <button class="dropdown" md-icon-button id="env-menu-right-mob">
                     {{selectedEnv}}
                     <md-icon>keyboard_arrow_down</md-icon>
                 </button>
@@ -73,7 +68,7 @@
                     <li class="mdl-menu__item" (click)="setEnv('prod')">prod</li>
                 </ul>
 
-                <button class="dropdown" style="color: #ffffff" md-icon-button id="org-menu-right-mob">
+                <button class="dropdown" md-icon-button id="org-menu-right-mob">
                     {{selectedOrg}}
                     <md-icon>keyboard_arrow_down</md-icon>
                 </button>
@@ -90,28 +85,27 @@
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title"><a class="mainLogo"></a> Seed</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link"
-               (click)="navigateTo('samples', 'Samples')" style="cursor: pointer;color: #424242">
+            <a class="mdl-navigation__link sidenav-link" (click)="navigateTo('samples', 'Samples')">
                 <md-icon md-font-set="material-icons">leak_add</md-icon>
-                <span style="margin-left: 15px;vertical-align: middle;font-size: medium">Samples</span>
+                <span>Samples</span>
             </a>
-            <a class="mdl-navigation__link"
-               (click)="navigateTo('add', 'Contribute')" style="cursor: pointer;color: #424242">
+            <a class="mdl-navigation__link sidenav-link" (click)="navigateTo('add', 'Contribute')">
                 <md-icon md-font-set="material-icons">create</md-icon>
-                <span style="margin-left: 15px;vertical-align: middle;font-size: medium">Contribute</span>
+                <span>Contribute</span>
             </a>
-            <a *ngIf="authenticated" class="mdl-navigation__link"
-               (click)="navigateTo('tasks', 'Tasks')" style="cursor: pointer;color: #424242">
+            <a *ngIf="authenticated" class="mdl-navigation__link sidenav-link" (click)="navigateTo('tasks', 'Tasks')">
                 <md-icon md-font-set="material-icons">device_hub</md-icon>
-                <span style="margin-left: 15px;vertical-align: middle;font-size: medium">Tasks</span>
+                <span>Tasks</span>
             </a>
         </nav>
         <div class="bottom-links">
-            <span class="bottom-text"><a class="bottom-text" href="https://community.apigee.com" target="_blank">Community</a> - <a
-                    class="bottom-text" href="https://edge.apigee.com" target="_blank">Edge</a> - <a
-                    class="bottom-text" href="https://apigee.com/appservices/" target="_blank">Baas</a></span>
+            <span>
+                <a href="https://community.apigee.com" target="_blank">Community</a> -
+                <a href="https://edge.apigee.com" target="_blank">Edge</a> -
+                <a href="https://apigee.com/appservices/" target="_blank">BaaS</a>
+            </span>
             <br>
-            <span style="color: #aaa; font-size: smaller">© 2016 Apigee</span>
+            <span style="font-size: smaller">© 2016 Apigee</span>
         </div>
     </div>
     <main class="mdl-layout__content">

@@ -25,15 +25,14 @@
         </tbody>
     </table>
 
-    <div [hidden]="!authenticated || tasks.length > 0"
-         style="width: 100%; height: 100%; text-align: center; position:relative; top: 250px;">
-        <h3 style="margin:0px;"><i class="material-icons" style="font-size: 100px">error_outline</i></h3><br>
-        <h4 style="margin: 0px">Task list not available the selected org.</h4>
+    <div [hidden]="!authenticated || tasks.length > 0" class="message-container">
+        <h3><i class="material-icons">error_outline</i></h3><br>
+        <h4>Task list not available the selected org.</h4>
     </div>
 </div>
 
 
-<div [hidden]="authenticated" style="width: 100%; height: 100%; text-align: center; position:relative; top: 250px;">
-    <h3 style="margin: 0px"><i class="material-icons" style="font-size: 100px">error_outline</i></h3><br>
-    <h4 style="margin: 0px">You need to be logged in to view this page.</h4>
+<div [hidden]="authenticated" class="message-container">
+    <h3><i class="material-icons">error_outline</i></h3><br>
+    <h4>You need to be logged in to view this page.</h4>
 </div>
