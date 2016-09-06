@@ -8,7 +8,7 @@
     "build": "webpack --inline --colors --progress --display-error-details --display-cached",
     "watch": "npm run build --watch",
     "client": "webpack-dev-server --inline --colors --progress --display-error-details --display-cached --port 3000  --content-base client",
-    "client-prod": "webpack-dev-server --inline --colors --progress --display-error-details --display-cached --host 0.0.0.0 --port 80  --content-base client"
+    "client-prod": "webpack-dev-server --lazy --colors --progress --display-error-details --display-cached --host 0.0.0.0 --port 80  --content-base client"
   },
   "license": "MIT",
   "devDependencies": {
