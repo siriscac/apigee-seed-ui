@@ -39,27 +39,6 @@ export class AppComponent {
     width: any;
     title = 'Samples';
 
-    sections: Object[] = [
-        {
-            name: "Samples",
-            description: "Browse the list of all samples",
-            icon: "leak_add",
-            href: "samples"
-        },
-        {
-            name: "Contribute",
-            description: "Contribute to Apigee Seed",
-            icon: "create",
-            href: "add"
-        },
-        {
-            name: "Deployments",
-            description: "List of deployments",
-            icon: "device_hub",
-            href: "tasks"
-        }
-    ];
-
     constructor(private authService: AuthService, private windowSize: WindowSize, private router:Router, private taskService: TaskService) {
         this.windowSize.width$.subscribe(width => {
             this.width = width
@@ -81,8 +60,7 @@ export class AppComponent {
 
     setOrg(org: string) {
         this.authService.setSelectedOrg(org);
-        this.taskService.resetTasks();
-        this.taskService.fetchTasks();
+        this.taskService.fetchTasks(org);
     }
 
     setEnv(env: string) {

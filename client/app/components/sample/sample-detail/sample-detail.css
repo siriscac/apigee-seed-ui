@@ -15,6 +15,7 @@
     margin: 30px 50px;
 }
 
+
 .sticky-card {
     position: fixed;
     width: calc(100% - 240px);

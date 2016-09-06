@@ -1,24 +1,39 @@
-<table [hidden]="!authenticated" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp w3-animate-top">
-    <thead>
+<div *ngIf="tasks">
+    <table [hidden]="!authenticated || tasks.length <= 0"
+           class="mdl-data-table mdl-js-data-table mdl-shadow--2dp w3-animate-top">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Sample</th>
             <th>Task</th>
+            <th>Env.</th>
             <th>Author</th>
             <th>Status</th>
             <th>Time</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         <tr *ngFor="let task of tasks">
             <td>{{task.id}}</td>
             <td>{{task.name}}</td>
             <td>{{task.task}}</td>
+            <td>{{task.env}}</td>
             <td>{{task.author}}</td>
-            <td>{{task.status}}</td>
+            <td><span class="{{statusTag(task.status)}}">{{task.status}}</span></td>
             <td>{{task.time | date:'mediumDate'}}, {{task.time | date:'shortTime'}}</td>
         </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
-<h3 [hidden]="authenticated" style="padding: 20px;">You need to be logged in to view this page</h3>
+    <div [hidden]="!authenticated || tasks.length > 0"
+         style="width: 100%; height: 100%; text-align: center; position:relative; top: 250px;">
+        <h3 style="margin:0px;"><i class="material-icons" style="font-size: 100px">error_outline</i></h3><br>
+        <h4 style="margin: 0px">Task list not available the selected org.</h4>
+    </div>
+</div>
+
+
+<div [hidden]="authenticated" style="width: 100%; height: 100%; text-align: center; position:relative; top: 250px;">
+    <h3 style="margin: 0px"><i class="material-icons" style="font-size: 100px">error_outline</i></h3><br>
+    <h4 style="margin: 0px">You need to be logged in to view this page.</h4>
+</div>

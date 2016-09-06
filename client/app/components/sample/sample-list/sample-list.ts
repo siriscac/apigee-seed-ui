@@ -49,7 +49,7 @@ export class SampleListComponent implements OnInit, OnDestroy {
     }
 
     onSelect(sample: Sample) {
-        this.router.navigate(['/sample', sample.id]);
+        this.router.navigate(['/sample', sample.name]);
     }
 
 }

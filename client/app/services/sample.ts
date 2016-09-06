@@ -39,11 +39,10 @@ export class SampleService {
             .subscribe(samples => {
                 for (let entity of samples) {
                     var sample: any = entity;
-                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git, sample.folder, 'Apigee', sample.created)
+                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.folder, sample.user, sample.created);
                     Samples.push(s);
                     s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
-                        '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html'
-
+                        '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
                 }
             }, err => {
                 console.error("Failed to fetch samples:", err);
@@ -83,12 +82,22 @@ export class SampleService {
                 });
     }
 
+    getSampleFromRegistry(id) {
+        return this.http.get(this.registryURL + "/samples/id/" + id);
+    }
+
     getSamples() {
         return samplesPromise;
     }
 
     getSample(id: number | string) {
         return samplesPromise
-            .then(samples => samples.find(sample => sample.id === id));
+            .then(samples => {
+                if (samples.length > 0) {
+                    return samples.find(sample => sample.name === id);
+                } else {
+                    return null;
+                }
+            });
     }
 }

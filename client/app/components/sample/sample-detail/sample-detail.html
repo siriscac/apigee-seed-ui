@@ -1,22 +1,23 @@
-<div>
+<div *ngIf="dataLoaded">
     <div class="sticky-card">
         <md-card *ngIf="sample" class="w3-animate-top">
             <md-card-title>{{sample.displayName}}</md-card-title>
             <md-card-content>
+                <span style="font-style: italic;font-size: smaller;color: #777;">Added by {{sample.user.user_email}} on {{sample.addedOn | date:'mediumDate'}}, {{sample.addedOn | date:'shortTime'}}</span>
                 <div [innerHTML]="sample.description"></div>
             </md-card-content>
-            <md-card-actions align="end" [hidden]="!authenticated">
-                <!--<a md-button (click)="runTest()">TEST</a>-->
-                <button md-button (click)="deploy()">DEPLOY</button>
-                <button md-button (click)="clean()">CLEAN</button>
+            <md-card-actions align="end">
+                <a md-button href="{{sample.gitURL}}" target="_blank">VIEW REPO</a>
+                <a md-button [hidden]="!authenticated" (click)="deploy()">DEPLOY</a>
+                <a md-button [hidden]="!authenticated" (click)="clean()">CLEAN</a>
             </md-card-actions>
         </md-card>
     </div>
 
-    <div *ngIf="!authenticated" class="w3-animate-opacity" style="padding-top: 150px">
+    <div *ngIf="!authenticated" class="w3-animate-opacity" style="padding-top: 170px">
         <md-tab-group [selectedIndex]="selectedIndex">
             <md-tab>
-                <template md-tab-label>Decription</template>
+                <template md-tab-label>Description</template>
                 <template md-tab-content>
                     <p style="padding-left: 35px; padding-right: 35px" [innerHTML]="sample.long_description"></p>
                 </template>
@@ -24,10 +25,10 @@
         </md-tab-group>
     </div>
 
-    <div *ngIf="authenticated" class="w3-animate-opacity" style="padding-top: 150px">
+    <div *ngIf="authenticated" class="w3-animate-opacity" style="padding-top: 170px">
         <md-tab-group [selectedIndex]="selectedIndex">
             <md-tab>
-                <template md-tab-label>Decription</template>
+                <template md-tab-label>Description</template>
                 <template md-tab-content>
                     <p style="padding-left: 35px; padding-right: 35px" [innerHTML]="sample.long_description"></p>
                 </template>

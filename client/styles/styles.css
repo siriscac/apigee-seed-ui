@@ -133,6 +133,36 @@ md-card {
     animation: loader-label 1.15s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
+.tag-success{
+    background: #4caf50;
+    padding: 4px;
+    border-radius: 3px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+
+.tag-progress {
+    background: #ffc73a;
+    padding: 4px;
+    border-radius: 3px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+
+.tag-failure {
+    background: #ff472e;
+    padding: 4px;
+    border-radius: 3px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+
 @-webkit-keyframes loader-figure {
     0% {
         height: 0;
