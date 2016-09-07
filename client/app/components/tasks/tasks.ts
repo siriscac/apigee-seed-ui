@@ -38,7 +38,7 @@ export class TaskComponent implements OnInit {
     statusTag(status) {
         if (status == "Success")
             return "tag-success";
-        else if (status == "Failed")
+        else if (status == "Failure")
             return "tag-failure";
         else
             return "tag-progress";
