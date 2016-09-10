@@ -36,7 +36,7 @@ export class MySamplesComponent implements OnInit, OnDestroy {
             .params
             .subscribe(params => {
                 this.selectedId = params['id'];
-                this.service.getSamples()
+                this.service.getMySamples()
                     .then(samples => this.samples = samples);
             });
     }
@@ -47,6 +47,18 @@ export class MySamplesComponent implements OnInit, OnDestroy {
 
     isSelected(sample: Sample) {
         return sample.id === this.selectedId;
+    }
+
+    onDelete(sample: Sample) {
+       this.show_spinner = true
+       this.service.deleteSample(sample) 
+       .then((res)=>{
+           return this.service.getMySamples()                    
+       })
+       .then( (samples) => {
+           this.samples = samples
+           this.show_spinner = false
+       });
     }
 
     onSelect(sample: Sample) {
@@ -64,6 +76,7 @@ export class MySamplesComponent implements OnInit, OnDestroy {
                         }
                 }
                 console.log('creating the sample now')
+                this.show_spinner = false
                 return this.service.createSample(sample)
             }).then( (res) => {      
                 this.show_spinner = false          

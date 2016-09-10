@@ -15,7 +15,6 @@ export class Sample {
 }
 
 let Samples = [];
-
 let samplesPromise = Promise.resolve(Samples);
 
 @Injectable()
@@ -114,6 +113,28 @@ export class SampleService {
 
     getSamples() {
         return samplesPromise;
+    }
+    
+    getMySamples() : Promise<Sample[]> {
+        let myPromise = new Promise( (resolve,reject) => {
+            let ql = "select * where user.user_email='" + this.authService.getUserEmail() + "'"
+            this.http.get(this.registryURL + "/samples?ql=" + ql)
+            .map(this.convertArray)
+            .subscribe(samples => {
+                let MySamples = []
+                for (let entity of samples) {
+                    var sample: any = entity;
+                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created);
+                    MySamples.push(s);
+                    s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
+                        '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
+                }
+                resolve(MySamples)
+            }, err => {
+                console.error("Failed to fetch My samples:", err);
+            });
+        })
+        return myPromise
     }
 
     getSample(id: number | string) {
