@@ -97,6 +97,10 @@
                 <md-icon md-font-set="material-icons">device_hub</md-icon>
                 <span>Tasks</span>
             </a>
+            <a *ngIf="authenticated" class="mdl-navigation__link sidenav-link" (click)="navigateTo('mycontrib', 'My Contributions')">
+                <md-icon md-font-set="material-icons">device_hub</md-icon>
+                <span>My Stuff</span>
+            </a>
         </nav>
         <div class="bottom-links">
             <span>

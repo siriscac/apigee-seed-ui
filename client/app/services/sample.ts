@@ -39,7 +39,7 @@ export class SampleService {
             .subscribe(samples => {
                 for (let entity of samples) {
                     var sample: any = entity;
-                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.folder, sample.user, sample.created);
+                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created);
                     Samples.push(s);
                     s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                         '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
@@ -64,7 +64,9 @@ export class SampleService {
         headers.append('Content-Type', 'application/json');
 
         let sampleData = JSON.stringify(sample);
-        this.http.post(this.registryURL + "/samples", sampleData, {headers: headers})
+
+        let createPromise = new Promise( (resolve,reject) => {
+            this.http.post(this.registryURL + "/samples", sampleData, {headers: headers})
             .subscribe(
                 data => {
                     var sp: Response = data;
@@ -75,11 +77,35 @@ export class SampleService {
                     s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                         '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
                     this.genericCallback(null, data.text());
+                    resolve()
                 },
                 err => {
                     console.log(err.json().message);
                     this.genericCallback(err.json(), null);
+                    reject(err)
                 });
+        })
+        return createPromise        
+    }
+
+    deleteSample(sample: Sample) {
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${this.authService.getToken()}`);
+
+        let deletePromise = new Promise( (resolve,reject) => {
+             this.http.delete(this.registryURL + "/samples/" + sample.id,  {headers: headers})             
+            .subscribe(
+                data => {
+                    console.log(data);                    
+                    resolve(data)
+                },
+                err => {
+                    console.log("error deleting sample " + err)
+                    reject(err);
+                });
+        })
+
+        return deletePromise       
     }
 
     getSampleFromRegistry(id) {

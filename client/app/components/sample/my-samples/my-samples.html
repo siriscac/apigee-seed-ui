@@ -1,0 +1,36 @@
+<div class="mdl-grid">
+    <div class="mdl-cell--6-col mdl-cell-4-col-tablet display-animation" [hidden]="show_spinner">
+        <div *ngFor="let sample of samples; let i = index" class="card-container">
+            <md-card *ngIf="i%2 == 0" class="w3-animate-zoom card-content">
+                <md-card-title>{{sample.displayName}}</md-card-title>
+                <md-card-content class="secondary w3-animate-opacity">
+                    {{sample.description}}
+                </md-card-content>
+                <md-card-actions align="end">
+                    <button md-button color="primary" (click)="onSelect(sample)">UPDATE</button>
+                </md-card-actions>
+            </md-card>
+        </div>
+    </div>
+
+    <div class="mdl-cell--6-col mdl-cell-4-col-tablet display-animation" [hidden]="show_spinner">
+        <div *ngFor="let sample of samples; let i = index" class="card-container">
+            <md-card *ngIf="i%2 != 0" class="w3-animate-zoom card-content">
+                <md-card-title>{{sample.displayName}}</md-card-title>
+                <md-card-content class="secondary w3-animate-opacity">
+                    {{sample.description}}
+                </md-card-content>
+                <md-card-actions align="end">
+                    <button md-button color="primary" (click)="onSelect(sample)">UPDATE</button>
+                </md-card-actions>
+            </md-card>
+        </div>
+    </div>
+    <div class="container-padded" [hidden]="!show_spinner">
+        <div class="mdl-spinner mdl-js-spinner is-active left-center">
+        </div>
+        <h4 style="text-align:center" *ngIf="sample">Updating {{sample.name}}.. <br>It will take a while, go grab a
+            coffee!</h4>
+    </div>
+
+</div>
