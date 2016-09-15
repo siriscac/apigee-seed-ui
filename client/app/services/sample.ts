@@ -38,7 +38,7 @@ export class SampleService {
             .subscribe(samples => {
                 for (let entity of samples) {
                     var sample: any = entity;
-                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created,sample.envVars);
+                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created, sample.envVars);
                     Samples.push(s);
                     s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                         '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
@@ -64,77 +64,75 @@ export class SampleService {
 
         let sampleData = JSON.stringify(sample);
 
-        let createPromise = new Promise( (resolve,reject) => {
+        let createPromise = new Promise((resolve, reject) => {
             this.http.post(this.registryURL + "/samples", sampleData, {headers: headers})
-            .subscribe(
-                data => {
-                    var sp: Response = data;
-                    var sample: any = JSON.parse(sp.text());
-                    console.log(sample);
-                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, '', sample.git_url, sample.api_folder, sample.user.email, sample.created,sample.envVars)
-                    Samples.push(s);
-                    s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
-                        '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
-                    this.genericCallback(null, data.text());
-                    resolve()
-                },
-                err => {
-                    console.log(err.json().message);
-                    this.genericCallback(err.json(), null);
-                    reject(err)
-                });
-        })
-        return createPromise        
+                .subscribe(
+                    data => {
+                        var sp: Response = data;
+                        var sample: any = JSON.parse(sp.text());
+                        console.log(sample);
+                        var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, '', sample.git_url, sample.api_folder, sample.user.email, sample.created, sample.envVars);
+                        Samples.push(s);
+                        s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
+                            '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
+                        resolve(data);
+                    },
+                    err => {
+                        console.log(err.json().message);
+                        reject(err);
+                    });
+        });
+        return createPromise;
     }
 
     deleteSample(sample: Sample) {
         let headers = new Headers();
         headers.append('Authorization', `Bearer ${this.authService.getToken()}`);
 
-        let deletePromise = new Promise( (resolve,reject) => {
-             this.http.delete(this.registryURL + "/samples/" + sample.id,  {headers: headers})             
-            .subscribe(
-                data => {
-                    console.log(data);                    
-                    resolve(data)
-                },
-                err => {
-                    console.log("error deleting sample " + err)
-                    reject(err);
-                });
-        })
+        let deletePromise = new Promise((resolve, reject) => {
+            this.http.delete(this.registryURL + "/samples/" + sample.id, {headers: headers})
+                .subscribe(
+                    data => {
+                        console.log(data);
+                        resolve(data)
+                    },
+                    err => {
+                        console.log("error deleting sample " + err)
+                        reject(err);
+                    });
+        });
 
-        return deletePromise       
+        return deletePromise;
     }
 
     getSampleFromRegistry(id) {
-        return this.http.get(this.registryURL + "/samples/id/" + id);
+        return this.http.get(this.registryURL + "/samples/" + id);
     }
 
     getSamples() {
         return samplesPromise;
     }
-    
-    getMySamples() : Promise<Sample[]> {
-        let myPromise = new Promise( (resolve,reject) => {
-            let ql = "select * where user.user_email='" + this.authService.getUserEmail() + "'"
+
+    getMySamples(): Promise<Sample[]> {
+        let samplePromise = new Promise((resolve, reject) => {
+            let ql = "select * where user.user_email='" + this.authService.getUserEmail() + "'";
             this.http.get(this.registryURL + "/samples?ql=" + ql)
-            .map(this.convertArray)
-            .subscribe(samples => {
-                let MySamples = []
-                for (let entity of samples) {
-                    var sample: any = entity;
-                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created,sample.envVars);
-                    MySamples.push(s);
-                    s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
-                        '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
-                }
-                resolve(MySamples)
-            }, err => {
-                console.error("Failed to fetch My samples:", err);
-            });
-        })
-        return myPromise
+                .map(this.convertArray)
+                .subscribe(samples => {
+                    let contribSamples = [];
+                    for (let entity of samples) {
+                        var sample: any = entity;
+                        var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created, sample.envVars);
+                        contribSamples.push(s);
+                        s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
+                            '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
+                    }
+                    resolve(contribSamples);
+                }, err => {
+                    console.error("Failed to fetch My samples:", err);
+                });
+        });
+        return samplePromise;
     }
 
     getSample(id: number | string) {

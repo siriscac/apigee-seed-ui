@@ -13,8 +13,11 @@ import {MdTabChangeEvent} from '@angular2-material/tabs';
 import {Sample, SampleService}   from '../../../services/sample';
 import {TaskService} from "../../../services/task-service";
 import {AuthService} from "../../../services/auth";
+import {ToastService} from "../../../services/toast";
 import {DeployService} from "../../../services/deploy";
 import {Config} from "../../../../config/config";
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {FORM_DIRECTIVES} from "@angular/common";
 
 declare var mocha: any;
 declare var assert: any;
@@ -23,7 +26,8 @@ declare var assert: any;
     templateUrl: 'sample-detail.html',
     styleUrls: ['sample-detail.css'],
     directives: [
-        MD_CARD_DIRECTIVES
+        MD_CARD_DIRECTIVES,
+        FORM_DIRECTIVES
     ],
     providers: [MdTabChangeEvent, DeployService]
 })
@@ -34,8 +38,9 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
     private selectedIndex: number = 0;
     private taskLog: string;
     private dataLoaded: boolean = false;
+    private envForm: FormGroup;
 
-    constructor(private route: ActivatedRoute, private router: Router, private service: SampleService, private authService: AuthService, private _sanitizer: DomSanitizationService, private deployService: DeployService, private taskService: TaskService) {
+    constructor(private route: ActivatedRoute, private router: Router, private service: SampleService, private authService: AuthService, private _sanitizer: DomSanitizationService, private deployService: DeployService, private formBuilder: FormBuilder, private taskService: TaskService, private toast: ToastService) {
         this.taskLog = "<div class=\"loader\" style=\"height: 550px\"><div class=\"loader__figure\"><\/div><div class=\"loader__label\">Deployment in progress..<\/div><\/div>";
         this.deployService.progress$.subscribe(
             data => {
@@ -51,7 +56,7 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
                     if (!sample) {
                         this.service.getSampleFromRegistry(id).map((res: Response) => res.json()).subscribe(sample => {
                             sample = sample[0];
-                            this.sample = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.folder, sample.user, sample.created,sample.envVars);
+                            this.sample = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.folder, sample.user, sample.created, sample.envVars);
                             this.displayData();
                         });
                     } else {
@@ -67,6 +72,15 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
     }
 
     displayData() {
+        var formGroup = {};
+        if (this.sample.envVars) {
+            for (var item of this.sample.envVars) {
+                formGroup[item] = ['', Validators.required];
+            }
+            console.log(formGroup);
+            this.envForm = this.formBuilder.group(formGroup);
+        }
+
         this.dataLoaded = true;
     }
 
@@ -93,7 +107,8 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
         let org = this.authService.getSelectedOrg();
         let env = this.authService.getSelectedEnv();
         let c = confirm("Are you sure you want to deploy this sample in the org. " + org + " under " + env + " environment?");
-        if(c == true){
+        if (c == true) {
+            this.toast.showToast('Deploying sample ' + this.sample.name);
             console.log('Deploying sample ' + this.sample.name);
             var path = Config.registryURL + '/o/' + org + '/e/' + env + '/samples/' + this.sample.id;
             this.deployService.deploy(path, `Bearer ${this.authService.getToken()}`).subscribe(() => {
@@ -113,6 +128,11 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
 
     get authenticated() {
         return this.authService.isAuthenticated();
+    }
+
+    get topPadding() {
+        var e: Element = document.getElementsByClassName("sticky-card")[0];
+        return e.clientHeight + 1;
     }
 
     ngOnDestroy() {

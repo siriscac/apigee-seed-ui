@@ -8,7 +8,8 @@
     "build": "webpack --inline --colors --progress --display-error-details --display-cached",
     "watch": "npm run build --watch",
     "client": "webpack-dev-server --inline --colors --progress --display-error-details --display-cached --port 3000  --content-base client",
-    "client-prod": "webpack-dev-server --lazy --colors --progress --display-error-details --display-cached --host 0.0.0.0 --port 80  --content-base client"
+    "client-test": "webpack-dev-server --lazy --colors --progress --display-error-details --display-cached --host 0.0.0.0 --port 0  --content-base client",
+    "client-prod": "webpack-dev-server --lazy --colors --progress --display-error-details --display-cached --port 3000  --content-base client"
   },
   "license": "MIT",
   "devDependencies": {
@@ -60,7 +61,9 @@
     "@angular2-material/toolbar": "2.0.0-alpha.7-4",
     "angular2-jwt": "^0.1.18",
     "angular2-localstorage": "^0.4.0",
+    "angularfire2": "^2.0.0-beta.4",
     "core-js": "^2.2.0",
+    "firebase": "^3.4.0",
     "ie-shim": "^0.1.0",
     "jquery": "^3.1.0",
     "jwt-decode": "^2.1.0",

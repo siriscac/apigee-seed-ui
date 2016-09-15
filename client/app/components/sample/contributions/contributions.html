@@ -7,8 +7,8 @@
                     {{sample.description}}
                 </md-card-content>
                 <md-card-actions align="end">
-                    <button md-button color="primary" (click)="onSelect(sample)">UPDATE</button>
-                    <button md-button color="red" (click)="onDelete(sample)">DELETE</button>
+                    <button md-button color="primary" (click)="updateSample(sample)">UPDATE</button>
+                    <button md-button color="red" (click)="deleteSample(sample)">DELETE</button>
                 </md-card-actions>
             </md-card>
         </div>
@@ -22,8 +22,8 @@
                     {{sample.description}}
                 </md-card-content>
                 <md-card-actions align="end">
-                    <button md-button color="primary" (click)="onSelect(sample)">UPDATE</button>
-                    <button md-button color="red" (click)="onDelete(sample)">DELETE</button>
+                    <button md-button color="primary" (click)="updateSample(sample)">UPDATE</button>
+                    <button md-button color="red" (click)="deleteSample(sample)">DELETE</button>
                 </md-card-actions>
             </md-card>
         </div>
@@ -36,3 +36,8 @@
     </div>
 
 </div>
+
+<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+        (click)="openAddSample()">
+    <i class="material-icons">add</i>
+</button>

@@ -127,6 +127,11 @@ md-card {
     margin: 10px;
 }
 
+.mdl-snackbar {
+    bottom: 16px !important;
+    left: 28% !important;
+}
+
 .card-container {
     display: -webkit-flex;
     display: flex;

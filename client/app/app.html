@@ -44,12 +44,38 @@
                     </li>
                 </ul>
 
+                <button class="dropdown" md-icon-button [hidden]="!authenticated" id="notif-menu-right">
+                    <md-icon>notifications</md-icon>
+                </button>
+
+                <ul [hidden]="!authenticated"
+                    class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                    data-mdl-for="notif-menu-right" style="min-width: 400px; max-width: 400px;padding-bottom: 0px">
+                    <li class="mdl-list__item"><span style="text-align: center">Notifications</span></li>
+                    <ul class="mdl-list" style="padding: 0px; max-height: 183px; overflow-y: auto">
+                        <li class="mdl-list__item mdl-list__item--three-line" *ngFor="let item of notifItems | async"
+                            style="height: 61px;background: #f9f9f9">
+                        <span class="mdl-list__item-primary-content" style="text-align: left;margin-top: 10px;">
+                            <md-icon md-font-set="material-icons" class="mdl-list__item-icon"
+                                     style="margin-top: 10px;font-size: 20px;margin-right: 15px;">device_hub</md-icon>
+                            <span style="font-size: 14px">{{item.sample_name}}</span>
+                            <span style="font-size: 12px" class="mdl-list__item-text-body">{{item.desc}}</span>
+                        </span>
+                        </li>
+                    </ul>
+                    <button class="mdl-list__item" md-icon-button (click)="navigateTo('tasks', 'Tasks')"
+                            style="margin-right: 10px; color: black; font-size: 12px">SEE ALL
+                        ACTIVITY
+                    </button>
+                </ul>
+
                 <button [hidden]="!authenticated" md-icon-button id="menu-right" class="user-actions">
                     <md-icon>account_circle</md-icon>
                     <span *ngIf="authenticated">{{username}}</span>
                 </button>
 
-                <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" data-mdl-for="menu-right">
+                <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                    data-mdl-for="menu-right">
                     <li disabled class="mdl-menu__item mdl-dropdown__user">{{email}}</li>
                     <li class="mdl-menu__item" (click)="doLogout()">Logout</li>
                 </ul>
@@ -89,17 +115,10 @@
                 <md-icon md-font-set="material-icons">leak_add</md-icon>
                 <span>Samples</span>
             </a>
-            <a class="mdl-navigation__link sidenav-link" (click)="navigateTo('add', 'Contribute')">
-                <md-icon md-font-set="material-icons">create</md-icon>
-                <span>Contribute</span>
-            </a>
-            <a *ngIf="authenticated" class="mdl-navigation__link sidenav-link" (click)="navigateTo('tasks', 'Tasks')">
-                <md-icon md-font-set="material-icons">device_hub</md-icon>
-                <span>Tasks</span>
-            </a>
-            <a *ngIf="authenticated" class="mdl-navigation__link sidenav-link" (click)="navigateTo('mycontrib', 'My Contributions')">
-                <md-icon md-font-set="material-icons">device_hub</md-icon>
-                <span>My Stuff</span>
+            <a *ngIf="authenticated" class="mdl-navigation__link sidenav-link"
+               (click)="navigateTo('contributions', 'Contributions')">
+                <md-icon md-font-set="material-icons">style</md-icon>
+                <span>Contributions</span>
             </a>
         </nav>
         <div class="bottom-links">

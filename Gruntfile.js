@@ -16,6 +16,9 @@ module.exports = function (grunt) {
             clientprod:{
                 command:"npm run client-prod"
             },
+            clienttest:{
+                command:"npm run client-test"
+            },
             options: {
                 stderr: false
             }
@@ -54,6 +57,11 @@ module.exports = function (grunt) {
             grunt.task.run([
                 'env:prod',
                 'shell:clientprod'
+            ])
+        } else if (target === 'test') {
+            grunt.task.run([
+                'env:prod',
+                'shell:clienttest'
             ])
         } else {
             grunt.task.run([

@@ -14,6 +14,7 @@ import {MdInput} from '@angular2-material/input';
 import {AuthService} from "../../../services/auth";
 import {Sample, SampleService} from "../../../services/sample";
 import {Config} from "../../../../config/config";
+import {ToastService} from "../../../services/toast";
 
 
 @Component({
@@ -30,14 +31,14 @@ export class AddSampleComponent {
 
     private spinner_html: any = "<div class=\"mdl-spinner mdl-js-spinner is-active left-center\"><\/div>";
     private contrib_guide: any = this.spinner_html;
-    private hide_form: boolean = true;
+    private hide_form: boolean = false;
     private show_spinner: boolean = false;
     private sample: Sample;
     private sampleForm: FormGroup;
     private registryURL: string = Config.registryURL;
 
 
-    constructor(private http: Http, private authService: AuthService, private sampleService: SampleService, private formBuilder: FormBuilder, private router: Router) {
+    constructor(private http: Http, private authService: AuthService, private sampleService: SampleService, private formBuilder: FormBuilder, private router: Router, private toast: ToastService) {
         this.getContribGuide();
 
         this.sampleForm = formBuilder.group({
@@ -46,7 +47,7 @@ export class AddSampleComponent {
             gitURL: ['', Validators.required],
             apiFolder: ['', Validators.required],
             addedBy: [this.authService.getUserEmail(), Validators.required],
-            envVars: [ '', Validators.required]
+            envVars: ['', Validators.required]
         });
     }
 
@@ -71,25 +72,27 @@ export class AddSampleComponent {
     save() {
         var data: any = this.sampleForm.value;
         this.show_spinner = true;
-        var vars = []
-        if(data.envVars && data.envVars.trim()!='')
-        {
-            var splits = data.envVars.split(',')
-            splits.forEach(function(s){vars.push(s)})
+        var vars = [];
+        if (data.envVars && data.envVars.trim() != '') {
+            var splits = data.envVars.split(',');
+            splits.forEach(function (s) {
+                vars.push(s)
+            })
         }
-        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '',vars);
 
-        this.sampleService.genericCallback = (error, data) => {
-            if (data) {
+        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '', vars);
+        this.toast.showToast("Creating sample - " + this.sample.name);
+
+        this.sampleService.createSample(this.sample)
+            .then((data) => {
                 console.log(data);
-                this.redirectToSamples();
-            } else {
-                console.log(error);
-            }
-        };
+                this.toast.showToast(this.sample.name + " was created successfully");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
 
-        this.sampleService.createSample(this.sample);
-
+        this.redirectToSamples();
     }
 
     doLogin() {

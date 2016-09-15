@@ -11,6 +11,7 @@ import {MD_LIST_DIRECTIVES} from '@angular2-material/list';
 import {ROUTER_DIRECTIVES, Router}  from '@angular/router';
 import {MdInput} from '@angular2-material/input';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
 
 import {SampleService} from "./services/sample";
 import {AuthService} from "./services/auth";
@@ -38,16 +39,22 @@ import {TaskService} from "./services/task-service";
 export class AppComponent {
     width: any;
     title = 'Samples';
+    notifItems: FirebaseListObservable<any[]>;
 
-    constructor(private authService: AuthService, private windowSize: WindowSize, private router:Router, private taskService: TaskService) {
+    constructor(private authService: AuthService, private windowSize: WindowSize, private router: Router, private taskService: TaskService, private af: AngularFire) {
         this.windowSize.width$.subscribe(width => {
-            this.width = width
+            this.width = width;
         });
+        this.registerFirebaseRef();
     }
 
     navigateTo(href: string, title: string) {
         this.title = title;
         this.router.navigate(['/' + href]);
+    }
+
+    registerFirebaseRef(){
+        this.notifItems = this.af.database.list('registry/tasks/' + this.authService.getSelectedOrg() + "-" + this.authService.getSelectedEnv());
     }
 
     doLogin() {
@@ -61,10 +68,12 @@ export class AppComponent {
     setOrg(org: string) {
         this.authService.setSelectedOrg(org);
         this.taskService.fetchTasks(org);
+        this.registerFirebaseRef();
     }
 
     setEnv(env: string) {
         this.authService.setSelectedEnv(env);
+        this.registerFirebaseRef();
     }
 
     get authenticated() {
@@ -92,7 +101,7 @@ export class AppComponent {
     }
 
     get contentClass() {
-        if(this.width < 800 && this.authService.isAuthenticated()){
+        if (this.width < 800 && this.authService.isAuthenticated()) {
             return "page-content";
         } else {
             return "page-content-lg";

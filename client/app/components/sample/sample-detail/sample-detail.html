@@ -1,10 +1,16 @@
 <div *ngIf="dataLoaded">
-    <div class="sticky-card">
+    <div id="sticky-card" class="sticky-card">
         <md-card *ngIf="sample" class="w3-animate-top">
             <md-card-title>{{sample.displayName}}</md-card-title>
             <md-card-content>
                 <span class="content-user">Added by {{sample.user.user_email}} on {{sample.addedOn | date:'mediumDate'}}, {{sample.addedOn | date:'shortTime'}}</span>
                 <div [innerHTML]="sample.description"></div>
+                <div *ngIf="sample.envVars && authenticated" style="margin-top: 10px">
+                    <span style="color: #636262; font-size: 12px">This sample requires the following environment variables</span>
+                    <form [formGroup]="envForm" style="padding-top: 5px;margin-left: -5px">
+                        <md-input *ngFor="let env of sample.envVars" placeholder="{{env}}" formControlName="{{env}}" ngDefaultControl style="margin-left: 5px"></md-input>
+                    </form>
+                </div>
             </md-card-content>
             <md-card-actions align="end">
                 <a md-button href="{{sample.gitURL}}" target="_blank">VIEW REPO</a>
@@ -14,8 +20,8 @@
         </md-card>
     </div>
 
-    <div *ngIf="!authenticated" class="w3-animate-opacity" style="padding-top: 170px">
-        <md-tab-group [selectedIndex]="selectedIndex">
+    <div *ngIf="!authenticated" class="w3-animate-opacity" [style.padding-top]="topPadding + 'px'">
+        <md-tab-group>
             <md-tab>
                 <template md-tab-label>Description</template>
                 <template md-tab-content>
@@ -25,7 +31,7 @@
         </md-tab-group>
     </div>
 
-    <div *ngIf="authenticated" class="w3-animate-opacity" style="padding-top: 170px">
+    <div *ngIf="authenticated" class="w3-animate-opacity" [style.padding-top]="topPadding + 'px'">
         <md-tab-group [selectedIndex]="selectedIndex">
             <md-tab>
                 <template md-tab-label>Description</template>
