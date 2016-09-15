@@ -51,7 +51,7 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
                     if (!sample) {
                         this.service.getSampleFromRegistry(id).map((res: Response) => res.json()).subscribe(sample => {
                             sample = sample[0];
-                            this.sample = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.folder, sample.user, sample.created);
+                            this.sample = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.folder, sample.user, sample.created,sample.envVars);
                             this.displayData();
                         });
                     } else {

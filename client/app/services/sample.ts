@@ -10,7 +10,7 @@ import {Config} from "../../config/config";
 export class Sample {
     public testURL: string;
 
-    constructor(public id: string, public displayName: string, public name: string, public description: string, public long_description: string, public gitURL: string, public apiFolder: string, public user: any, public addedOn: any) {
+    constructor(public id: string, public displayName: string, public name: string, public description: string, public long_description: string, public gitURL: string, public apiFolder: string, public user: any, public addedOn: any, public envVars: any) {
     }
 }
 
@@ -38,7 +38,7 @@ export class SampleService {
             .subscribe(samples => {
                 for (let entity of samples) {
                     var sample: any = entity;
-                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created);
+                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created,sample.envVars);
                     Samples.push(s);
                     s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                         '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
@@ -71,7 +71,7 @@ export class SampleService {
                     var sp: Response = data;
                     var sample: any = JSON.parse(sp.text());
                     console.log(sample);
-                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, '', sample.git_url, sample.api_folder, sample.user.email, sample.created)
+                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, '', sample.git_url, sample.api_folder, sample.user.email, sample.created,sample.envVars)
                     Samples.push(s);
                     s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                         '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
@@ -124,7 +124,7 @@ export class SampleService {
                 let MySamples = []
                 for (let entity of samples) {
                     var sample: any = entity;
-                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created);
+                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created,sample.envVars);
                     MySamples.push(s);
                     s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                         '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';

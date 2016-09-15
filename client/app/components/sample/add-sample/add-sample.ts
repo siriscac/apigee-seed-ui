@@ -45,7 +45,8 @@ export class AddSampleComponent {
             description: ['', Validators.required],
             gitURL: ['', Validators.required],
             apiFolder: ['', Validators.required],
-            addedBy: [this.authService.getUserEmail(), Validators.required]
+            addedBy: [this.authService.getUserEmail(), Validators.required],
+            envVars: [ '', Validators.required]
         });
     }
 
@@ -70,8 +71,13 @@ export class AddSampleComponent {
     save() {
         var data: any = this.sampleForm.value;
         this.show_spinner = true;
-
-        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '');
+        var vars = []
+        if(data.envVars && data.envVars.trim()!='')
+        {
+            var splits = data.envVars.split(',')
+            splits.forEach(function(s){vars.push(s)})
+        }
+        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '',vars);
 
         this.sampleService.genericCallback = (error, data) => {
             if (data) {
