@@ -37,7 +37,8 @@
 
 </div>
 
-<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+<button [hidden]="!authenticated"
+        class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
         (click)="openAddSample()">
     <i class="material-icons">add</i>
 </button>

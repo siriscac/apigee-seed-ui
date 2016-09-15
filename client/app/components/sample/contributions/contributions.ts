@@ -11,6 +11,7 @@ import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
 
 import {SampleService, Sample}   from '../../../services/sample';
 import {ToastService} from "../../../services/toast";
+import {AuthService} from "../../../services/auth";
 
 @Component({
     templateUrl: 'contributions.html',
@@ -29,7 +30,7 @@ export class ContributionsComponent implements OnInit, OnDestroy {
     private sub: any;
     private show_spinner: boolean = false;
 
-    constructor(private service: SampleService, private route: ActivatedRoute, private router: Router, private toast: ToastService) {
+    constructor(private service: SampleService, private route: ActivatedRoute, private router: Router, private toast: ToastService, private authService: AuthService) {
 
     }
 
@@ -49,6 +50,10 @@ export class ContributionsComponent implements OnInit, OnDestroy {
 
     isSelected(sample: Sample) {
         return sample.id === this.selectedId;
+    }
+
+    get authenticated(){
+        return this.authService.isAuthenticated();
     }
 
     deleteSample(sample: Sample) {
