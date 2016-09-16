@@ -48,12 +48,12 @@ export class DeployService {
             };
 
             xhr.open('DELETE', url, true);
-            xhr.setRequestHeader("Authorization", token);
+            xhr.setRequestHeader("Authorization", token);            
             xhr.send();
         });
     }
 
-    public deploy(url: string, token: string): Observable<any> {
+    public deploy(url: string, body: any , token: string): Observable<any> {
         return Observable.create(observer => {
 
             this.logs = "Deployment in progress";
@@ -83,7 +83,8 @@ export class DeployService {
 
             xhr.open('POST', url, true);
             xhr.setRequestHeader("Authorization", token);
-            xhr.send();
+            xhr.setRequestHeader('Content-Type','application/json')
+            xhr.send(body);
         });
     }
 }

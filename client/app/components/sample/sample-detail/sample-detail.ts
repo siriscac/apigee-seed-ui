@@ -106,12 +106,14 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
         this.selectedIndex = 1;
         let org = this.authService.getSelectedOrg();
         let env = this.authService.getSelectedEnv();
+        var envVars = this.envForm.value;
+        console.log(envVars)
         let c = confirm("Are you sure you want to deploy this sample in the org. " + org + " under " + env + " environment?");
         if (c == true) {
             this.toast.showToast('Deploying sample ' + this.sample.name);
             console.log('Deploying sample ' + this.sample.name);
             var path = Config.registryURL + '/o/' + org + '/e/' + env + '/samples/' + this.sample.id;
-            this.deployService.deploy(path, `Bearer ${this.authService.getToken()}`).subscribe(() => {
+            this.deployService.deploy(path, JSON.stringify(envVars), `Bearer ${this.authService.getToken()}`).subscribe(() => {
             });
             this.taskService.fetchTasks(null);
         }
