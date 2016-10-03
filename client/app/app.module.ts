@@ -7,11 +7,13 @@ import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
-import {MdMenuModule} from '@angular2-material/menu';
-import {LocalStorageService} from 'angular2-localstorage/LocalStorageEmitter';
+import {LocalStorageService, LocalStorageSubscriber } from 'angular2-localstorage/LocalStorageEmitter';
 import {MdTabsModule} from '@angular2-material/tabs';
+import {MdIconModule, MdIconRegistry} from '@angular2-material/icon';
+import {MdButtonModule} from '@angular2-material/button'
+import {MdInputModule} from '@angular2-material/input'
 import {AngularFireModule} from 'angularfire2';
-
+import {MdCardModule} from '@angular2-material/card'
 import {rootRouterConfig} from "./app.routes";
 import {AppComponent} from "./app";
 import {SampleService} from "./services/sample";
@@ -32,12 +34,11 @@ import {AuthTokenHandler} from './components/auth/access-token-handler';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {AuthGuard} from "./directives/auth-guard";
 import {firebaseConfig} from "../config/firebase-config";
-import {Scroller} from "./services/scroller";
 
 @NgModule({
     declarations: [AppComponent, SampleDetailComponent, SampleListComponent, AddSampleComponent, ContributionsComponent, TaskComponent, AuthTokenHandler],
-    imports: [Ng2PageScrollModule, BrowserModule, MdTabsModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig), MdMenuModule, AngularFireModule.initializeApp(firebaseConfig)],
-    providers: [AuthGuard, SampleService, AuthService, TaskService, LocalStorageService, WindowService, WindowSize, ToastService, {
+    imports: [MdButtonModule, MdInputModule, MdIconModule, MdCardModule, Ng2PageScrollModule, BrowserModule, MdTabsModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig), AngularFireModule.initializeApp(firebaseConfig)],
+    providers: [AuthGuard, SampleService, AuthService, TaskService, LocalStorageService, WindowService, WindowSize, ToastService, MdIconRegistry, {
         provide: LocationStrategy,
         useClass: HashLocationStrategy
     }],

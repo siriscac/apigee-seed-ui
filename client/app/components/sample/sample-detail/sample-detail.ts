@@ -4,10 +4,9 @@
 
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute}       from '@angular/router';
-import {DomSanitizationService, SafeHtml} from "@angular/platform-browser";
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {Response} from "@angular/http";
 
-import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
 import {MdTabChangeEvent} from '@angular2-material/tabs';
 
 import {Sample, SampleService}   from '../../../services/sample';
@@ -17,7 +16,6 @@ import {ToastService} from "../../../services/toast";
 import {DeployService} from "../../../services/deploy";
 import {Config} from "../../../../config/config";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {FORM_DIRECTIVES} from "@angular/common";
 
 declare var mocha: any;
 declare var assert: any;
@@ -25,10 +23,6 @@ declare var assert: any;
 @Component({
     templateUrl: 'sample-detail.html',
     styleUrls: ['sample-detail.css'],
-    directives: [
-        MD_CARD_DIRECTIVES,
-        FORM_DIRECTIVES
-    ],
     providers: [MdTabChangeEvent, DeployService]
 })
 
@@ -40,7 +34,7 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
     private dataLoaded: boolean = false;
     private envForm: FormGroup;
 
-    constructor(private route: ActivatedRoute, private router: Router, private service: SampleService, private authService: AuthService, private _sanitizer: DomSanitizationService, private deployService: DeployService, private formBuilder: FormBuilder, private taskService: TaskService, private toast: ToastService) {
+    constructor(private route: ActivatedRoute, private router: Router, private service: SampleService, private authService: AuthService, private _sanitizer: DomSanitizer, private deployService: DeployService, private formBuilder: FormBuilder, private taskService: TaskService, private toast: ToastService) {
         this.taskLog = "<div class=\"loader\" style=\"height: 550px\"><div class=\"loader__figure\"><\/div><div class=\"loader__label\">Deployment in progress..<\/div><\/div>";
         this.deployService.progress$.subscribe(
             data => {

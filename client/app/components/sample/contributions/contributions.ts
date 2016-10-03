@@ -4,10 +4,6 @@
 
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {ROUTER_DIRECTIVES}  from '@angular/router';
-
-import {MD_GRID_LIST_DIRECTIVES} from '@angular2-material/grid-list';
-import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
 
 import {SampleService, Sample}   from '../../../services/sample';
 import {ToastService} from "../../../services/toast";
@@ -16,11 +12,6 @@ import {AuthService} from "../../../services/auth";
 @Component({
     templateUrl: 'contributions.html',
     styleUrls: ['contributions.css'],
-    directives: [
-        MD_CARD_DIRECTIVES,
-        MD_GRID_LIST_DIRECTIVES,
-        ROUTER_DIRECTIVES
-    ],
     providers: [SampleService]
 })
 

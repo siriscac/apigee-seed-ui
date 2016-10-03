@@ -3,14 +3,7 @@
  */
 
 import {Component} from '@angular/core';
-import {MdToolbar} from '@angular2-material/toolbar';
-import {MdButton} from '@angular2-material/button';
-import {MdMenu} from '@angular2-material/menu';
-import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
-import {MD_LIST_DIRECTIVES} from '@angular2-material/list';
-import {ROUTER_DIRECTIVES, Router}  from '@angular/router';
-import {MdInput} from '@angular2-material/input';
-import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
+import {Router}  from '@angular/router';
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 
 import {SampleService} from "./services/sample";
@@ -23,17 +16,7 @@ import {TaskService} from "./services/task-service";
     selector: 'app',
     templateUrl: './app.html',
     styleUrls: ['app.css'],
-    directives: [
-        MD_SIDENAV_DIRECTIVES,
-        ROUTER_DIRECTIVES,
-        MD_LIST_DIRECTIVES,
-        MdToolbar,
-        MdButton,
-        MdInput,
-        MdMenu,
-        MdIcon
-    ],
-    providers: [WindowService, AuthService, SampleService, MdIconRegistry]
+    providers: [WindowService, AuthService, SampleService]
 })
 
 export class AppComponent {

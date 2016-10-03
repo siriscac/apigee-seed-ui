@@ -5,11 +5,7 @@
 import {Component} from '@angular/core';
 import {Http} from "@angular/http";
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
-import {FORM_DIRECTIVES} from '@angular/common';
 import {Router} from "@angular/router";
-
-import {MdButton} from '@angular2-material/button';
-import {MdInput} from '@angular2-material/input';
 
 import {AuthService} from "../../../services/auth";
 import {Sample, SampleService} from "../../../services/sample";
@@ -19,12 +15,7 @@ import {ToastService} from "../../../services/toast";
 
 @Component({
     templateUrl: './add-sample.html',
-    styleUrls: ['add-sample.css'],
-    directives: [
-        MdButton,
-        MdInput,
-        FORM_DIRECTIVES
-    ]
+    styleUrls: ['add-sample.css']
 })
 
 export class AddSampleComponent {
