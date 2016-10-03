@@ -47,6 +47,7 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
                 console.log('RESP:' + data);
                 this.taskLog = data;
             });
+
     }
 
     ngOnInit() {
@@ -54,9 +55,10 @@ export class SampleDetailComponent implements OnInit, OnDestroy {
                 let id = params['id'];
                 this.service.getSample(id).then(sample => {
                     if (!sample) {
+                        console.log("sad");
                         this.service.getSampleFromRegistry(id).map((res: Response) => res.json()).subscribe(sample => {
                             sample = sample[0];
-                            this.sample = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.folder, sample.user, sample.created, sample.envVars);
+                            this.sample = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.folder, sample.user, sample.created, sample.envVars, sample.sample_type);
                             this.displayData();
                         });
                     } else {

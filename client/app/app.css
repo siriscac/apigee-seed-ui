@@ -7,10 +7,6 @@
     color: rgba(0, 0, 0, 0.54);
 }
 
-body {
-    margin: 0px;
-}
-
 .page-header {
     padding-bottom: 5px;
 }
@@ -129,7 +125,11 @@ md-card {
 
 .mdl-snackbar {
     bottom: 16px !important;
-    left: 28% !important;
+    left: 58% !important;
+}
+
+.mdl-textfield {
+    padding: 17px 0;
 }
 
 .card-container {
@@ -215,6 +215,11 @@ md-card {
 
     .mdl-layout-title {
         padding-left: 25px;
+    }
+
+    .mdl-snackbar {
+        bottom: 16px !important;
+        left: 50% !important;
     }
 }
 

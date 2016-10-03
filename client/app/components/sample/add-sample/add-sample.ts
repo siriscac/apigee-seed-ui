@@ -47,7 +47,8 @@ export class AddSampleComponent {
             gitURL: ['', Validators.required],
             apiFolder: ['', Validators.required],
             addedBy: [this.authService.getUserEmail(), Validators.required],
-            envVars: ['', Validators.required]
+            envVars: ['', Validators.required],
+            sampleType: ['', Validators.required]
         });
     }
 
@@ -62,11 +63,7 @@ export class AddSampleComponent {
     }
 
     toggleGuide() {
-        if (this.hide_form == false) {
-            this.hide_form = true;
-        } else {
-            this.hide_form = false;
-        }
+        this.hide_form = this.hide_form == false;
     }
 
     save() {
@@ -76,11 +73,11 @@ export class AddSampleComponent {
         if (data.envVars && data.envVars.trim() != '') {
             var splits = data.envVars.split(',');
             splits.forEach(function (s) {
-                vars.push(s)
-            })
+                vars.push(s);
+            });
         }
 
-        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '', vars);
+        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '', vars, data.sampleType);
         this.toast.showToast("Creating sample - " + this.sample.name);
 
         this.sampleService.createSample(this.sample)

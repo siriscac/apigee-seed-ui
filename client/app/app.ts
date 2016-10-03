@@ -48,6 +48,11 @@ export class AppComponent {
         this.registerFirebaseRef();
     }
 
+    onscroll(){
+        // var page: Element = document.getElementsByClassName("page-content-lg");
+        // console.log(page[0].scrollTop);
+    }
+
     navigateTo(href: string, title: string) {
         this.title = title;
         this.router.navigate(['/' + href]);
@@ -117,11 +122,7 @@ export class AppComponent {
     }
 
     get isMobile() {
-        if (this.width < 800) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.width < 800;
     }
 
 }

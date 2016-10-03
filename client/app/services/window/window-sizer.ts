@@ -27,3 +27,5 @@ function getWindowSize() {
         width: window.innerWidth
     };
 }
+
+

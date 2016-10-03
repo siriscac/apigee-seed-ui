@@ -21,7 +21,7 @@ export class TaskService {
         if (this.authService.isAuthenticated()) {
             tasksPromise.then(tasks => {
                 if (tasks.length == 0) {
-                    this.fetchTasks(null);
+                    //this.fetchTasks(null);
                 }
             });
         }
@@ -40,7 +40,7 @@ export class TaskService {
                         Tasks.push(new Task(task.uuid, task.sample.display_name, task.user.username, new Date(task.created), task.status, task.task, task.env));
                     }
                 }, err => {
-                    console.error("Failed to fetch tasks:", err);
+                    console.log("Failed to fetch tasks:" +  err);
                 });
         });
     }

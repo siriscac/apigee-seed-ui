@@ -10,12 +10,15 @@ import {Config} from "../../config/config";
 export class Sample {
     public testURL: string;
 
-    constructor(public id: string, public displayName: string, public name: string, public description: string, public long_description: string, public gitURL: string, public apiFolder: string, public user: any, public addedOn: any, public envVars: any) {
+    constructor(public id: string, public displayName: string, public name: string, public description: string, public long_description: string, public gitURL: string, public apiFolder: string, public user: any, public addedOn: any, public envVars: any, public sample_type: String) {
     }
 }
 
+let sections = ["security", "solution", "traffic-management"];
 let Samples = [];
+let SectionedSamples = {};
 let samplesPromise = Promise.resolve(Samples);
+let sectionedSamplesPromise = Promise.resolve(SectionedSamples);
 
 @Injectable()
 export class SampleService {
@@ -36,12 +39,18 @@ export class SampleService {
         this.http.get(this.registryURL + "/samples")
             .map(this.convertArray)
             .subscribe(samples => {
+                console.log("fetching samples");
+                sections.forEach(function (section) {
+                    SectionedSamples[section] = [];
+                });
+
                 for (let entity of samples) {
                     var sample: any = entity;
-                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created, sample.envVars);
-                    Samples.push(s);
+                    var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created, sample.envVars, sample.sample_type);
                     s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                         '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
+                    Samples.push(s);
+                    SectionedSamples[sample.sample_type].push(s);
                 }
             }, err => {
                 console.error("Failed to fetch samples:", err);
@@ -71,7 +80,7 @@ export class SampleService {
                         var sp: Response = data;
                         var sample: any = JSON.parse(sp.text());
                         console.log(sample);
-                        var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, '', sample.git_url, sample.api_folder, sample.user.email, sample.created, sample.envVars);
+                        var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, '', sample.git_url, sample.api_folder, sample.user.email, sample.created, sample.envVars, sample.sample_type);
                         Samples.push(s);
                         s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                             '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';
@@ -97,7 +106,7 @@ export class SampleService {
                         resolve(data)
                     },
                     err => {
-                        console.log("error deleting sample " + err)
+                        console.log("error deleting sample " + err);
                         reject(err);
                     });
         });
@@ -110,7 +119,7 @@ export class SampleService {
     }
 
     getSamples() {
-        return samplesPromise;
+        return sectionedSamplesPromise;
     }
 
     getMySamples(): Promise<Sample[]> {
@@ -122,7 +131,7 @@ export class SampleService {
                     let contribSamples = [];
                     for (let entity of samples) {
                         var sample: any = entity;
-                        var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created, sample.envVars);
+                        var s = new Sample(sample.uuid, sample.display_name, sample.name, sample.description, sample.long_description, sample.git_repo, sample.api_folder, sample.user, sample.created, sample.envVars, sample.sample_type);
                         contribSamples.push(s);
                         s.testURL = this.registryURL + '/v1/o/' + this.authService.getSelectedOrg() +
                             '/e/' + this.authService.getSelectedEnv() + '/samples/' + sample.name + '/tests/test.html';

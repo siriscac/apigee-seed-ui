@@ -11,6 +11,7 @@ import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
 
 import {SampleService, Sample}   from '../../../services/sample';
 
+
 @Component({
     templateUrl: 'sample-list.html',
     styleUrls: ['sample-list.css'],
@@ -23,9 +24,10 @@ import {SampleService, Sample}   from '../../../services/sample';
 })
 
 export class SampleListComponent implements OnInit, OnDestroy {
-    private samples: Sample[];
+    private samples: any = {};
     private selectedId: any;
     private sub: any;
+    private sections = ["security", "solution", "traffic-management"];
 
     constructor(private service: SampleService, private route: ActivatedRoute, private router: Router) {
 
@@ -37,7 +39,9 @@ export class SampleListComponent implements OnInit, OnDestroy {
             .subscribe(params => {
                 this.selectedId = params['id'];
                 this.service.getSamples()
-                    .then(samples => this.samples = samples);
+                    .then(samples => {
+                        this.samples = samples;
+                    });
             });
     }
 
@@ -53,4 +57,8 @@ export class SampleListComponent implements OnInit, OnDestroy {
         this.router.navigate(['/sample', sample.name]);
     }
 
+    scrollTo(section) {
+        console.log(section);
+        document.getElementById(section).scrollIntoView();
+    }
 }

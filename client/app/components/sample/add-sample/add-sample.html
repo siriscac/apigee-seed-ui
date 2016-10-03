@@ -14,12 +14,36 @@
         <md-card [hidden]="hide_form || !authenticated">
             <md-card-title>Add a new Sample</md-card-title>
             <md-card-content>
-                <form [formGroup]="sampleForm">
-                    <md-input placeholder="Name" formControlName="name" ngDefaultControl></md-input>
-                    <md-input placeholder="Description" formControlName="description" ngDefaultControl></md-input>
-                    <md-input placeholder="Git URL" formControlName="gitURL" ngDefaultControl></md-input>
-                    <md-input placeholder="API Folder" formControlName="apiFolder" ngDefaultControl></md-input>
-                    <md-input placeholder="Env Variables" formControlName="envVars" ngDefaultControl></md-input>
+                <form [formGroup]="sampleForm" class="mdl-grid">
+                    <div class="mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input formControlName="name" ngDefaultControl class="mdl-textfield__input" type="text" id="fm-name">
+                        <label class="mdl-textfield__label" for="fm-name">Name</label>
+                    </div>
+                    <div class="mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea formControlName="description" ngDefaultControl class="mdl-textfield__input" type="text" rows= "2" id="fm-desc" ></textarea>
+                        <label class="mdl-textfield__label" for="fm-desc">Description</label>
+                    </div>
+                    <div class="mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input formControlName="gitURL" ngDefaultControl class="mdl-textfield__input" type="text" id="fm-git">
+                        <label class="mdl-textfield__label" for="fm-git">GitHub Repo. URL</label>
+                    </div>
+                    <div class="mdl-cell mdl-cell--4-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input formControlName="apiFolder" ngDefaultControl class="mdl-textfield__input" type="text" id="fm-apiFolder">
+                        <label class="mdl-textfield__label" for="fm-apiFolder">API Folder</label>
+                    </div>
+                    <div class="mdl-cell mdl-cell--4-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input formControlName="envVars" ngDefaultControl class="mdl-textfield__input" type="text" id="fm-envVars">
+                        <label class="mdl-textfield__label" for="fm-envVars">Environment Variables</label>
+                    </div>
+                    <div class="mdl-cell mdl-cell--4-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                        <input formControlName="sampleType" class="mdl-textfield__input" type="text" id="fm-tpye" readonly tabIndex="-1"/>
+                        <label class="mdl-textfield__label" for="fm-tpye">Type</label>
+                        <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="fm-tpye">
+                            <li class="mdl-menu__item" data-val="security">Security</li>
+                            <li class="mdl-menu__item" data-val="solution">Solution</li>
+                            <li class="mdl-menu__item" data-val="traffic-management">Traffic Management</li>
+                        </ul>
+                    </div>
                 </form>
             </md-card-content>
             <md-card-actions align="end">
