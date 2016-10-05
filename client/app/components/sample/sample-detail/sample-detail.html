@@ -23,7 +23,7 @@
     <div *ngIf="!authenticated" class="w3-animate-opacity" [style.padding-top]="topPadding + 'px'">
         <md-tab-group>
             <md-tab>
-                <template md-tab-label>Description</template>
+                <template md-tab-label>DESCRIPTION</template>
                 <template md-tab-content>
                     <p class="card-description" [innerHTML]="sample.long_description"></p>
                 </template>
@@ -34,19 +34,19 @@
     <div *ngIf="authenticated" class="w3-animate-opacity" [style.padding-top]="topPadding + 'px'">
         <md-tab-group [selectedIndex]="selectedIndex">
             <md-tab>
-                <template md-tab-label>Description</template>
+                <template class="md-tab-label-fix" md-tab-label>DESCRIPTION</template>
                 <template md-tab-content>
                     <p class="card-description" [innerHTML]="sample.long_description"></p>
                 </template>
             </md-tab>
             <md-tab>
-                <template md-tab-label>Task Logs</template>
+                <template class="md-tab-label-fix" md-tab-label>TASK LOGS</template>
                 <template md-tab-content>
                     <p class="card-description" style="padding-top: 20px" [innerHTML]="taskLogs"></p>
                 </template>
             </md-tab>
             <md-tab>
-                <template md-tab-label>Test</template>
+                <template class="md-tab-label-fix" md-tab-label>TEST</template>
                 <template md-tab-content>
                     <p [innerHTML]="testHtml"></p>
                 </template>

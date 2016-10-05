@@ -134,7 +134,7 @@ export class AuthService {
         this.http.post(this.registryURL + "/user", '', {headers: headers})
             .subscribe(
                 data => {
-                    console.log(data);
+                    //console.log(data);
                 },
                 err => {
                     console.log(err.json().message);

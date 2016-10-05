@@ -39,7 +39,6 @@ export class SampleService {
         this.http.get(this.registryURL + "/samples")
             .map(this.convertArray)
             .subscribe(samples => {
-                console.log("fetching samples");
                 sections.forEach(function (section) {
                     SectionedSamples[section] = [];
                 });

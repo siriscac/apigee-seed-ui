@@ -28,7 +28,8 @@
 
 .sticky-card {
     position: fixed;
-    width: calc(100% - 240px);
+    /*width: calc(100% - 240px); with sidebar */
+    width: 100%;
     z-index: 1;
 }
 

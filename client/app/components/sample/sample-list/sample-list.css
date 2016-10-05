@@ -22,9 +22,20 @@ md-grid-list {
 }
 
 .grid-fix {
-    padding-left: 10px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding: 0;
+}
+
+.sections-container{
+    padding: 20px;
+}
+
+.title-container {
+    margin-left: 8px;
+}
+
+.container-title{
+    font-style: italic;
+    color: #4a4a4a;
 }
 
 .mdl-layout-title {
@@ -57,9 +68,9 @@ md-grid-list {
 }
 
 .sub-title {
-    margin-left: 16px;
     color: #757575;
     font-style: italic;
+    margin: 0px;
 }
 
 .tab-fix {
@@ -76,12 +87,12 @@ md-grid-list {
 }
 
 @media (max-width: 840px) {
-    .mdl-grid {
-        padding: 10px !important;
-    }
-
     .mdl-cell--6-col {
         width: 100% !important;
+    }
+
+    .sections-container{
+        padding: 10px;
     }
 }
 

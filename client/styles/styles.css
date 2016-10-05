@@ -1,5 +1,4 @@
 
-
 td {
     text-align: center !important;
 }
@@ -24,7 +23,7 @@ thead {
     bottom: 0;
 }
 
-.bottom-links span {
+.bottom-links  span {
     color: #aaa;
     font-size: small;
     text-decoration: none;
@@ -36,6 +35,31 @@ thead {
     text-decoration: none;
 }
 
+.bottom-links-footer {
+    text-align: center;
+    text-decoration: none;
+    padding: 20px;
+    width: 100%;
+    bottom: 0;
+}
+
+.bottom-links-footer  span {
+    color: #aaa;
+    font-size: small;
+    text-decoration: none;
+}
+
+.bottom-links-footer a {
+    color: #aaa;
+    font-size: small;
+    text-decoration: none;
+}
+
+.titleLogo {
+    cursor: pointer;
+    text-decoration: none;
+}
+
 md-ink-bar {
     background-color: #fc4c02 !important;
 }
@@ -44,7 +68,17 @@ md-card {
     min-height: 148px;
 }
 
+.main-title {
+    font-size: 16px;
+    color: white;
+}
+
+.md-tab-header {
+    background: #f9f9f9;
+}
+
 .md-tab-label {
+    font-size: 12px !important;
     min-width: 133px !important;
 }
 
@@ -132,7 +166,7 @@ md-card {
     animation: loader-label 1.15s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-.tag-success{
+.tag-success {
     background: #4caf50;
     padding: 4px;
     border-radius: 3px;
@@ -140,7 +174,6 @@ md-card {
     text-transform: uppercase;
     font-size: 10px;
 }
-
 
 .tag-progress {
     background: #ffc73a;
@@ -151,7 +184,6 @@ md-card {
     font-size: 10px;
 }
 
-
 .tag-failure {
     background: #ff472e;
     padding: 4px;
@@ -160,7 +192,6 @@ md-card {
     text-transform: uppercase;
     font-size: 10px;
 }
-
 
 @-webkit-keyframes loader-figure {
     0% {

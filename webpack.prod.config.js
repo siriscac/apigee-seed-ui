@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 
+
 // Webpack Config
 var webpackConfig = {
   entry: {
@@ -15,14 +16,7 @@ var webpackConfig = {
 
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(true),
-    new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false, //prod
-      mangle: { screw_ie8 : true, keep_fnames: true }, //prod
-      compress: { screw_ie8: true }, //prod
-      comments: false //prod
-    }),
-    new webpack.optimize.DedupePlugin()
+    new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity })
   ],
 
   module: {

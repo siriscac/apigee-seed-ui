@@ -10,25 +10,39 @@
 <div *ngIf="samples" class="mdl-layout__tab-bar tab-fix">
     <a id="tab-security" (click)="scrollTo('security')" class="mdl-layout__tab tab">Security</a>
     <a id="tab-solution" (click)="scrollTo('solution')" class="mdl-layout__tab tab">Solutions</a>
-    <a id="tab-traffic-management" (click)="scrollTo('traffic-management')" class="mdl-layout__tab tab">Traffic Management</a>
+    <a id="tab-traffic-management" (click)="scrollTo('traffic-management')" class="mdl-layout__tab tab">Traffic
+        Management</a>
 </div>
+<div class="sections-container">
+    <div *ngFor="let section of sections" class="mdl-cell mdl-cell--12-col">
+        <div class="title-container">
+            <span class="container-title" id="{{section}}">{{section.replace("-"," ").toUpperCase()}}</span>
+            <p *ngIf="samples[section]" class="sub-title">{{samples[section].length}} solution(s)</p>
+        </div>
 
-<div *ngFor="let section of sections" class="mdl-cell mdl-cell--12-col">
-    <span class="mdl-layout-title" id="{{section}}">{{section.replace("-"," ").toUpperCase()}}</span>
-    <p *ngIf="samples[section]" class="sub-title">{{samples[section].length}} solution(s)</p>
-    <div class="mdl-grid grid-fix" *ngIf="samples[section]">
-        <div *ngFor="let sample of samples[section]"
-             class="mdl-cell mdl-cell--4-col mdl-cell-4-col-tablet display-animation">
-            <md-card (click)="onSelect(sample)" class="w3-animate-zoom card-content">
-                <md-card-title>{{sample.displayName}}</md-card-title>
-                <md-card-content class="secondary w3-animate-opacity">
-                    {{sample.description}}
-                </md-card-content>
-            </md-card>
+        <div class="mdl-grid grid-fix" *ngIf="samples[section]">
+            <div *ngFor="let sample of samples[section]"
+                 class="mdl-cell mdl-cell--4-col mdl-cell-4-col-tablet display-animation">
+                <md-card (click)="onSelect(sample)" class="w3-animate-zoom card-content">
+                    <md-card-title>{{sample.displayName}}</md-card-title>
+                    <md-card-content class="secondary w3-animate-opacity">
+                        {{sample.description}}
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+        <div *ngIf="!samples[section]" style="padding: 50px;">
+            <div class="mdl-spinner progress-circle mdl-spinner--single-color mdl-js-spinner is-active"></div>
         </div>
     </div>
-    <div *ngIf="!samples[section]" style="padding: 50px;">
-        <div class="mdl-spinner progress-circle mdl-spinner--single-color mdl-js-spinner is-active"></div>
-    </div>
+</div>
+<div class="bottom-links-footer">
+                <span>
+                    <a href="https://community.apigee.com" target="_blank">Community</a> -
+                    <a href="https://edge.apigee.com" target="_blank">Edge</a> -
+                    <a href="https://apigee.com/appservices/" target="_blank">BaaS</a>
+                </span>
+    <br>
+    <span style="font-size: smaller">© 2016 Apigee</span>
 </div>
 

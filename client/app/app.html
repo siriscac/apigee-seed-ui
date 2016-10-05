@@ -3,19 +3,23 @@
     <button class="mdl-snackbar__action" type="button"></button>
 </div>
 
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
+            <a class="titleLogo" href="/#/samples">
+                <span class="whiteLogo"></span>
+                <span class="main-title">Seed</span>
+            </a>
             <div class="mdl-layout-spacer"></div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                    <label class="mdl-button mdl-js-button mdl-button--icon" for="sample6">
-                        <i class="material-icons">search</i>
-                    </label>
-                    <div class="mdl-textfield__expandable-holder">
-                        <input class="mdl-textfield__input" type="text" id="sample6">
-                    </div>
-                </div>
+                <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;expandable">-->
+                    <!--<label class="mdl-button mdl-js-button mdl-button&#45;&#45;icon" for="sample6">-->
+                        <!--<i class="material-icons">search</i>-->
+                    <!--</label>-->
+                    <!--<div class="mdl-textfield__expandable-holder">-->
+                        <!--<input class="mdl-textfield__input" type="text" id="sample6">-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <button class="dropdown" md-icon-button [hidden]="!authenticated" id="notif-menu-right">
                     <md-icon>notifications</md-icon>
@@ -118,29 +122,29 @@
             </div>
         </div>
     </header>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title"><a class="mainLogo"></a> Seed</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link sidenav-link" (click)="navigateTo('samples', 'Samples')">
-                <md-icon md-font-set="material-icons">leak_add</md-icon>
-                <span>Samples</span>
-            </a>
-            <a *ngIf="authenticated" class="mdl-navigation__link sidenav-link"
-               (click)="navigateTo('contributions', 'Contributions')">
-                <md-icon md-font-set="material-icons">style</md-icon>
-                <span>Contributions</span>
-            </a>
-        </nav>
-        <div class="bottom-links">
-            <span>
-                <a href="https://community.apigee.com" target="_blank">Community</a> -
-                <a href="https://edge.apigee.com" target="_blank">Edge</a> -
-                <a href="https://apigee.com/appservices/" target="_blank">BaaS</a>
-            </span>
-            <br>
-            <span style="font-size: smaller">© 2016 Apigee</span>
-        </div>
-    </div>
+    <!--<div class="mdl-layout__drawer">-->
+        <!--<span class="mdl-layout-title"><a class="mainLogo"></a> Seed</span>-->
+        <!--<nav class="mdl-navigation">-->
+            <!--<a class="mdl-navigation__link sidenav-link" (click)="navigateTo('samples', 'Samples')">-->
+                <!--<md-icon md-font-set="material-icons">leak_add</md-icon>-->
+                <!--<span>Samples</span>-->
+            <!--</a>-->
+            <!--<a *ngIf="authenticated" class="mdl-navigation__link sidenav-link"-->
+               <!--(click)="navigateTo('contributions', 'Contributions')">-->
+                <!--<md-icon md-font-set="material-icons">style</md-icon>-->
+                <!--<span>Contributions</span>-->
+            <!--</a>-->
+        <!--</nav>-->
+        <!--<div class="bottom-links">-->
+            <!--<span>-->
+                <!--<a href="https://community.apigee.com" target="_blank">Community</a> - -->
+                <!--<a href="https://edge.apigee.com" target="_blank">Edge</a> - -->
+                <!--<a href="https://apigee.com/appservices/" target="_blank">BaaS</a>-->
+            <!--</span>-->
+            <!--<br>-->
+            <!--<span style="font-size: smaller">© 2016 Apigee</span>-->
+        <!--</div>-->
+    <!--</div>-->
     <main (scroll)="onscroll()" class="mdl-layout__content">
         <div class="{{contentClass}}">
             <router-outlet></router-outlet>
