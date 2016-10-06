@@ -3,7 +3,7 @@
  */
 
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute, CanActivate} from '@angular/router';
 
 import {SampleService, Sample}   from '../../../services/sample';
 import {ToastService} from "../../../services/toast";
@@ -19,7 +19,6 @@ export class ContributionsComponent implements OnInit, OnDestroy {
     private samples: Sample[];
     private selectedId: any;
     private sub: any;
-    private show_spinner: boolean = false;
 
     constructor(private service: SampleService, private route: ActivatedRoute, private router: Router, private toast: ToastService, private authService: AuthService) {
 
@@ -43,7 +42,7 @@ export class ContributionsComponent implements OnInit, OnDestroy {
         return sample.id === this.selectedId;
     }
 
-    get authenticated(){
+    get authenticated() {
         return this.authService.isAuthenticated();
     }
 
@@ -61,6 +60,7 @@ export class ContributionsComponent implements OnInit, OnDestroy {
             this.service.deleteSample(sample)
                 .then((res) => {
                     console.log('Creating the sample now');
+                    sample.name = sample.displayName;
                     return this.service.createSample(sample);
                 })
                 .then((res) => {
@@ -72,7 +72,7 @@ export class ContributionsComponent implements OnInit, OnDestroy {
                         }
                     }
                     this.toast.showToast(sample.displayName + " was updated successfully");
-                    //this.router.navigate(['/contributions']);
+                    this.router.navigate(['/contributions']);
                 })
                 .catch((err) => {
                     console.log('Delete failed');
@@ -83,7 +83,7 @@ export class ContributionsComponent implements OnInit, OnDestroy {
     }
 
     proceedToDelete(sample: Sample) {
-        this.toast.showToast("Deleting sample - " + sample.displayName + "?");
+        this.toast.showToast("Deleting sample - " + sample.displayName);
 
         this.service.deleteSample(sample)
             .then((res)=> {
@@ -96,7 +96,7 @@ export class ContributionsComponent implements OnInit, OnDestroy {
     }
 
     openAddSample() {
-        this.router.navigate(['/add']);
+        this.router.navigate(['add']);
     }
 
 }

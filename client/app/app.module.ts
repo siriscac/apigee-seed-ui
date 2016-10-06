@@ -32,13 +32,12 @@ import {ContributionsComponent} from "./components/sample/contributions/contribu
 import {TaskComponent} from "./components/tasks/tasks";
 import {AuthTokenHandler} from './components/auth/access-token-handler';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
-import {AuthGuard} from "./directives/auth-guard";
 import {firebaseConfig} from "../config/firebase-config";
 
 @NgModule({
     declarations: [AppComponent, SampleDetailComponent, SampleListComponent, AddSampleComponent, ContributionsComponent, TaskComponent, AuthTokenHandler],
     imports: [MdButtonModule, MdInputModule, MdIconModule, MdCardModule, Ng2PageScrollModule, BrowserModule, MdTabsModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig), AngularFireModule.initializeApp(firebaseConfig)],
-    providers: [AuthGuard, SampleService, AuthService, TaskService, LocalStorageService, WindowService, WindowSize, ToastService, MdIconRegistry, {
+    providers: [SampleService, AuthService, TaskService, LocalStorageService, WindowService, WindowSize, ToastService, MdIconRegistry, {
         provide: LocationStrategy,
         useClass: HashLocationStrategy
     }],

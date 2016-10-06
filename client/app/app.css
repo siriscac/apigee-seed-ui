@@ -124,7 +124,6 @@ md-card {
 
 .mdl-snackbar {
     bottom: 16px !important;
-    left: 58% !important;
 }
 
 .mdl-textfield {
@@ -177,6 +176,17 @@ md-card {
     border-radius: 3px;
 }
 
+.act_btn {
+    padding: 10px;
+    color: black;
+    font-size: 12px;
+}
+
+.act_btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 1px;
+}
+
 .user-actions {
     padding: 5px;
 }
@@ -194,11 +204,11 @@ md-card {
     bottom: 0;
 }
 
-.mdl-button__fix{
+.mdl-button__fix {
     position: relative;
 }
 
-.white__fix{
+.white__fix {
     color: white !important;
 }
 
@@ -224,6 +234,12 @@ md-card {
     color: white;
 }
 
+.notif_menu {
+    min-width: 400px;
+    max-width: 400px;
+    padding-bottom: 0;
+}
+
 @media (max-width: 600px) {
     .nav-desktop {
         display: none;
@@ -239,12 +255,18 @@ md-card {
 
     .mdl-snackbar {
         bottom: 16px !important;
-        left: 50% !important;
     }
 
     .mdl-layout__header-row {
         height: 56px;
         padding: 0 16px 0 16px;
     }
+
+    .notif_menu {
+        min-width: 320px;
+        max-width: 320px;
+        padding-bottom: 0;
+    }
+
 }
 

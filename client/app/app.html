@@ -21,33 +21,7 @@
                     <!--</div>-->
                 <!--</div>-->
 
-                <button class="dropdown" md-icon-button [hidden]="!authenticated" id="notif-menu-right">
-                    <md-icon>notifications</md-icon>
-                </button>
-
-                <ul [hidden]="!authenticated"
-                    class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                    data-mdl-for="notif-menu-right" style="min-width: 400px; max-width: 400px;padding-bottom: 0px">
-                    <li class="mdl-list__item"><span style="text-align: center">Notifications</span></li>
-                    <li class="mdl-list__item" [hidden]="showNotif" style="margin-left: 75px"><p style="text-align: center;font-size: small;font-style: italic;color: #757575; margin: 0">No tasks performed on this org-env</p></li>
-                    <ul class="mdl-list" style="padding: 0px; max-height: 183px; overflow-y: auto">
-                        <li class="mdl-list__item mdl-list__item--three-line" *ngFor="let item of notifItems | async"
-                            style="height: 61px;background: #f9f9f9">
-                        <span class="mdl-list__item-primary-content" style="text-align: left;margin-top: 10px;">
-                            <md-icon md-font-set="material-icons" class="mdl-list__item-icon"
-                                     style="margin-top: 10px;font-size: 20px;margin-right: 15px;">device_hub</md-icon>
-                            <span style="font-size: 14px">{{item.sample_name}}</span>
-                            <span style="font-size: 12px" class="mdl-list__item-text-body">{{item.desc}}</span>
-                        </span>
-                        </li>
-                    </ul>
-                    <button class="mdl-list__item" md-icon-button (click)="navigateTo('tasks', 'Tasks')"
-                            style="margin-right: 10px; color: black; font-size: 12px">SEE ALL
-                        ACTIVITY
-                    </button>
-                </ul>
-
-                <button md-icon-button [hidden]="authenticated" (click)="doLogin()">
+                <button md-icon-button class="dropdown" [hidden]="authenticated" (click)="doLogin()">
                     <md-icon>account_circle</md-icon>
                     LOGIN
                 </button>
@@ -90,8 +64,35 @@
                 <ul [hidden]="!authenticated" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                     data-mdl-for="menu-right">
                     <li disabled class="mdl-menu__item mdl-dropdown__user">{{email}}</li>
+                    <li class="mdl-menu__item" [hidden]="!isAdmin" (click)="navigateTo('contributions','Contributions')">Contributions</li>
                     <li class="mdl-menu__item" (click)="doLogout()">Logout</li>
                 </ul>
+
+                <button class="dropdown" md-icon-button [hidden]="!authenticated" id="notif-menu-right">
+                    <md-icon>notifications</md-icon>
+                </button>
+
+                <ul [hidden]="!authenticated"
+                    class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect notif_menu"
+                    data-mdl-for="notif-menu-right">
+                    <li class="mdl-list__item"><span style="text-align: center">Notifications</span></li>
+                    <li class="mdl-list__item" [hidden]="showNotif" style="margin-left: 75px"><p style="text-align: center;font-size: small;font-style: italic;color: #757575; margin: 0">No tasks performed on this org-env</p></li>
+                    <ul class="mdl-list" style="padding: 0px; max-height: 183px; overflow-y: auto">
+                        <li class="mdl-list__item mdl-list__item--three-line" *ngFor="let item of notifItems | async"
+                            style="height: 61px;background: #f9f9f9">
+                        <span class="mdl-list__item-primary-content" style="text-align: left;margin-top: 10px;">
+                            <md-icon md-font-set="material-icons" class="mdl-list__item-icon"
+                                     style="margin-top: 10px;font-size: 20px;margin-right: 15px;">device_hub</md-icon>
+                            <span style="font-size: 14px">{{item.sample_name}}</span>
+                            <span style="font-size: 12px" class="mdl-list__item-text-body">{{item.desc}}</span>
+                        </span>
+                        </li>
+                    </ul>
+                    <button class="mdl-list__item act_btn" md-icon-button (click)="navigateTo('tasks', 'Tasks')">SEE ALL
+                        ACTIVITY
+                    </button>
+                </ul>
+
             </div>
 
 

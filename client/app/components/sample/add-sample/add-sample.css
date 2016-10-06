@@ -7,6 +7,10 @@ md-input {
     margin-right: 200px;
 }
 
+.input-fix {
+    margin-left: 5px !important;
+}
+
 .dropdown {
     padding: 5px;
 }
@@ -16,9 +20,16 @@ md-input {
     border-radius: 3px;
 }
 
+.mdl-selectfield__select {
+    padding: 5px 0;
+}
+
 @media (max-width: 1140px) {
     .add-box {
-        margin-left: 0px;
-        margin-right: 0px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .input-fix {
+        margin-left: 0 !important;
     }
 }

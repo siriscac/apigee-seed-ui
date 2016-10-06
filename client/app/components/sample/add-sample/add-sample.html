@@ -1,7 +1,7 @@
 <div class="w3-animate-opacity w3-animate-left container-padded">
     <md-card [hidden]="!hide_form && authenticated">
         <md-card-title>Contribution Guide</md-card-title>
-        <md-card-content [innerHTML]="contrib_guide">
+        <md-card-content [innerHTML]="contribGuide">
 
         </md-card-content>
         <md-card-actions align="end">
@@ -27,31 +27,29 @@
                         <input formControlName="gitURL" ngDefaultControl class="mdl-textfield__input" type="text" id="fm-git">
                         <label class="mdl-textfield__label" for="fm-git">GitHub Repo. URL</label>
                     </div>
-                    <div class="mdl-cell mdl-cell--4-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <div class="mdl-cell--4-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input formControlName="apiFolder" ngDefaultControl class="mdl-textfield__input" type="text" id="fm-apiFolder">
                         <label class="mdl-textfield__label" for="fm-apiFolder">API Folder</label>
                     </div>
-                    <div class="mdl-cell mdl-cell--4-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <div class="input-fix mdl-cell--4-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input formControlName="envVars" ngDefaultControl class="mdl-textfield__input" type="text" id="fm-envVars">
                         <label class="mdl-textfield__label" for="fm-envVars">Environment Variables</label>
                     </div>
-                    <div class="mdl-cell mdl-cell--4-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <button class="dropdown" md-icon-button id="type-menu-right">
-                            {{selectedTypeVal}}
-                            <md-icon>keyboard_arrow_down</md-icon>
-                        </button>
-                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                            data-mdl-for="type-menu-right">
-                            <li class="mdl-menu__item" (click)="setType('security', 'Security')">Security</li>
-                            <li class="mdl-menu__item" (click)="setType('solution', 'Solution')">Solution</li>
-                            <li class="mdl-menu__item" (click)="setType('traffic-management', 'Traffic Management')">Traffic Management</li>
-                        </ul>
+                    <div class="input-fix mdl-cell--4-col mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                        <select formControlName="sampleType" ngDefaultControl id="sl-sample-type" class="mdl-selectfield__select" (change)="onChange($event.target.value)">
+                            <option value=""></option>
+                            <option value="security">Security</option>
+                            <option value="solution">Solution</option>
+                            <option value="traffic-management">Traffic Management</option>
+                        </select>
+                        <label class="mdl-selectfield__label" for="sl-sample-type">Sample Type</label>
+                        <span class="mdl-selectfield__error">Select a value</span>
                     </div>
                 </form>
             </md-card-content>
             <md-card-actions align="end">
                 <button md-button (click)="toggleGuide()">SHOW GUIDE</button>
-                <button md-button (click)="save()">ADD</button>
+                <button md-button (click)="save()" [disabled]="!sampleForm.valid">ADD</button>
             </md-card-actions>
         </md-card>
     </div>

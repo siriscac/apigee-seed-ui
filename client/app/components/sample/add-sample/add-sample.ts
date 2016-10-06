@@ -2,7 +2,7 @@
  * Created by siriscac on 21/07/16.
  */
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Http} from "@angular/http";
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {Router} from "@angular/router";
@@ -11,6 +11,7 @@ import {AuthService} from "../../../services/auth";
 import {Sample, SampleService} from "../../../services/sample";
 import {Config} from "../../../../config/config";
 import {ToastService} from "../../../services/toast";
+import {SafeHtml, DomSanitizer} from "@angular/platform-browser";
 
 
 @Component({
@@ -18,7 +19,7 @@ import {ToastService} from "../../../services/toast";
     styleUrls: ['add-sample.css']
 })
 
-export class AddSampleComponent {
+export class AddSampleComponent implements OnInit {
 
     private spinner_html: any = "<div class=\"mdl-spinner mdl-js-spinner is-active left-center\"><\/div>";
     private contrib_guide: any = this.spinner_html;
@@ -26,21 +27,23 @@ export class AddSampleComponent {
     private show_spinner: boolean = false;
     private sample: Sample;
     private sampleForm: FormGroup;
+    private sampleType: string;
     private registryURL: string = Config.registryURL;
-    private selectedType: string = "security";
-    private selectedTypeKey: string = "Security";
 
+    constructor(private http: Http, private authService: AuthService, private sampleService: SampleService, private _sanitizer: DomSanitizer, private formBuilder: FormBuilder, private router: Router, private toast: ToastService) {
 
-    constructor(private http: Http, private authService: AuthService, private sampleService: SampleService, private formBuilder: FormBuilder, private router: Router, private toast: ToastService) {
+    }
+
+    ngOnInit() {
         this.getContribGuide();
 
-        this.sampleForm = formBuilder.group({
+        this.sampleForm = this.formBuilder.group({
             name: ['', Validators.required],
             description: ['', Validators.required],
             gitURL: ['', Validators.required],
             apiFolder: ['', Validators.required],
             addedBy: [this.authService.getUserEmail(), Validators.required],
-            envVars: ['', Validators.required],
+            envVars: [''],
             sampleType: ['', Validators.required]
         });
     }
@@ -57,12 +60,15 @@ export class AddSampleComponent {
 
     toggleGuide() {
         this.hide_form = this.hide_form == false;
-        var data: any = this.sampleForm.value;
-        console.log(data);
+    }
+
+    onChange(value) {
+        this.sampleType = value;
     }
 
     save() {
         var data: any = this.sampleForm.value;
+
         this.show_spinner = true;
         var vars = [];
         if (data.envVars && data.envVars.trim() != '') {
@@ -72,7 +78,7 @@ export class AddSampleComponent {
             });
         }
 
-        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '', vars, this.selectedTypeKey);
+        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '', vars, this.sampleType);
         this.toast.showToast("Creating sample - " + this.sample.name);
 
         this.sampleService.createSample(this.sample)
@@ -87,10 +93,6 @@ export class AddSampleComponent {
         this.redirectToSamples();
     }
 
-    get selectedTypeVal(){
-        return this.selectedTypeKey;
-    }
-
     doLogin() {
         this.authService.doLogin();
     }
@@ -99,9 +101,9 @@ export class AddSampleComponent {
         this.router.navigate(['/samples']);
     }
 
-    setType(val, key){
-        this.selectedType = val;
-        this.selectedTypeKey = key;
+    get contribGuide(): SafeHtml {
+        var wrapper: any = this.contrib_guide;
+        return this._sanitizer.bypassSecurityTrustHtml(wrapper)
     }
 
     get authenticated() {

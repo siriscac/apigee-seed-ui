@@ -56,7 +56,7 @@ export class SampleListComponent implements OnInit, OnDestroy {
 
     subtitle(section) {
         let st = "solution";
-        if (this.samples[section].length > 1) {
+        if (this.samples[section].length > 1 || this.samples[section].length == 0) {
             st = st + "s";
         }
         return this.samples[section].length + " " + st;

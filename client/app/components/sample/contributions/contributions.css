@@ -28,6 +28,26 @@ md-grid-list {
     background: #ff7233;
 }
 
+.message-container {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    top: 210px;
+}
+
+.message-container h3 {
+    margin: 0px;
+}
+
+.message-container h3 i {
+    font-size: 100px;
+}
+
+.message-container .mdl-spinner {
+    margin-top: 100px;
+}
+
 @media (max-width: 840px) {
     .mdl-grid {
         padding: 10px !important;

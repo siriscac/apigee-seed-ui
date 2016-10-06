@@ -45,7 +45,7 @@ export class AppComponent {
 
     registerFirebaseRef(){
         this.notifCount = 0;
-        this.notifItems = this.af.database.list('registry/tasks/' + this.authService.getSelectedOrg() + "-" + this.authService.getSelectedEnv());
+        this.notifItems = this.af.database.list('registry/tasks/' + this.authService.getSelectedOrg() + "-" + this.authService.getSelectedEnv()).map(items => items.sort((a, b) => b.time - a.time))  as FirebaseListObservable<any[]>;
         this.notifItems.subscribe(item => {
             this.notifCount = item.length;
         });
@@ -95,6 +95,10 @@ export class AppComponent {
 
     get selectedEnv() {
         return this.authService.getSelectedEnv();
+    }
+
+    get isAdmin(){
+        return this.authService.isAdmin();
     }
 
     get contentClass() {

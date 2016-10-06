@@ -26,6 +26,8 @@ export class AuthService {
     private expiresTimerID: any = null;
     private loopCount = 600;
     private intervalLength = 100;
+    private appAdmins = [];
+    private isUserAdmin: boolean = false;
 
     private jwtHelper: JwtHelper = new JwtHelper();
     private locationWatcher = new EventEmitter();  // @TODO: switch to RxJS Subject instead of EventEmitter
@@ -42,6 +44,7 @@ export class AuthService {
         if (timeDiff > 0) {
             this.authenticated = true;
             this.startExpiresTimer(timeDiff);
+            this.getAppAdmins();
             this.emitAuthStatus(true);
             this.fetchUserInfo();
         }
@@ -81,6 +84,7 @@ export class AuthService {
 
                             this.windowHandle.close();
                             this.emitAuthStatus(true);
+                            this.getAppAdmins();
                             this.loginUserToRegistry();
                             this.fetchUserInfo();
                             this.fetchUserOrgs();
@@ -125,6 +129,27 @@ export class AuthService {
                 error: error
             }
         );
+    }
+
+    private getAppAdmins() {
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${this.token}`);
+
+        this.http.get(this.registryURL + "/admins", {headers: headers})
+            .map(res => res.json())
+            .subscribe(
+                data => {
+                    this.appAdmins = data;
+                    let parent = this;
+                    this.appAdmins.forEach(function (user, index) {
+                        if (user.name == parent.getUserEmail()) {
+                            parent.isUserAdmin = true;
+                        }
+                    });
+                },
+                err => {
+                    console.log(err.json().message);
+                });
     }
 
     private loginUserToRegistry() {
@@ -238,6 +263,10 @@ export class AuthService {
 
     public isAuthenticated() {
         return this.authenticated;
+    }
+
+    public isAdmin() {
+       return this.isUserAdmin;
     }
 
     private parse(str) { // lifted from https://github.com/sindresorhus/query-string
