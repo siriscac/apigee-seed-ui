@@ -16,18 +16,20 @@ export class Task {
 @Injectable()
 export class TaskService {
     private registryURL: string = Config.registryURL;
+    private taskLoading: boolean = false;
 
     constructor(private http: Http, private authService: AuthService) {
         if (this.authService.isAuthenticated()) {
             tasksPromise.then(tasks => {
-                if (tasks.length == 0) {
-                    //this.fetchTasks(null);
+                if (tasks.length == 0 && authService.isAuthenticated()) {
+                    this.fetchTasks(null);
                 }
             });
         }
     }
 
     public fetchTasks(org: string) {
+        this.taskLoading = true;
         this.resetTasks().then(msg => {
             let org_name = org ? org : this.authService.getSelectedOrg();
             let headers = new Headers();
@@ -39,12 +41,16 @@ export class TaskService {
                         var task: any = entity;
                         Tasks.push(new Task(task.uuid, task.sample.display_name, task.user.username, new Date(task.created), task.status, task.task, task.env));
                     }
+                    this.taskLoading = false;
                 }, err => {
                     console.log("Failed to fetch tasks:" +  err);
                 });
         });
     }
 
+    public getTaskLoading(){
+        return this.taskLoading;
+    }
 
     public getTasks() {
         return tasksPromise;

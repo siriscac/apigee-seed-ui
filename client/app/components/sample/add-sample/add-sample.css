@@ -7,6 +7,15 @@ md-input {
     margin-right: 200px;
 }
 
+.dropdown {
+    padding: 5px;
+}
+
+.dropdown:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
 @media (max-width: 1140px) {
     .add-box {
         margin-left: 0px;

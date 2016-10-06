@@ -29,6 +29,7 @@
                     class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                     data-mdl-for="notif-menu-right" style="min-width: 400px; max-width: 400px;padding-bottom: 0px">
                     <li class="mdl-list__item"><span style="text-align: center">Notifications</span></li>
+                    <li class="mdl-list__item" [hidden]="showNotif" style="margin-left: 75px"><p style="text-align: center;font-size: small;font-style: italic;color: #757575; margin: 0">No tasks performed on this org-env</p></li>
                     <ul class="mdl-list" style="padding: 0px; max-height: 183px; overflow-y: auto">
                         <li class="mdl-list__item mdl-list__item--three-line" *ngFor="let item of notifItems | async"
                             style="height: 61px;background: #f9f9f9">

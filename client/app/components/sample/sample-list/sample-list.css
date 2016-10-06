@@ -13,6 +13,16 @@ md-grid-list {
     max-lines: 2;
 }
 
+md-card-title{
+    line-height: 115%;
+    font-size: 21px;
+}
+
+md-card {
+    padding: 18px;
+    min-height: 138px;
+}
+
 .card-content:hover {
     cursor: pointer;
 }

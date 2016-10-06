@@ -17,7 +17,7 @@
     <div *ngFor="let section of sections" class="mdl-cell mdl-cell--12-col">
         <div class="title-container">
             <span class="container-title" id="{{section}}">{{section.replace("-"," ").toUpperCase()}}</span>
-            <p *ngIf="samples[section]" class="sub-title">{{samples[section].length}} solution(s)</p>
+            <p *ngIf="samples[section]" class="sub-title">{{subtitle(section)}}</p>
         </div>
 
         <div class="mdl-grid grid-fix" *ngIf="samples[section]">

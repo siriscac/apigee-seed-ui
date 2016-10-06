@@ -3,7 +3,7 @@
     height: 100%;
     text-align: center;
     position: relative;
-    top: 250px;
+    top: 290px;
 }
 
 .message-container h3 {
@@ -12,4 +12,16 @@
 
 .message-container h3 i {
     font-size: 100px;
+}
+
+.message-container .mdl-spinner {
+    margin-top: 100px;
+}
+
+.sub-message {
+    color: #757575;
+    text-transform: uppercase;
+    padding: 15px;
+    font-style: italic;
+    font-size: 12px;
 }

@@ -35,13 +35,16 @@
                         <input formControlName="envVars" ngDefaultControl class="mdl-textfield__input" type="text" id="fm-envVars">
                         <label class="mdl-textfield__label" for="fm-envVars">Environment Variables</label>
                     </div>
-                    <div class="mdl-cell mdl-cell--4-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                        <input formControlName="sampleType" class="mdl-textfield__input" type="text" id="fm-tpye" readonly tabIndex="-1"/>
-                        <label class="mdl-textfield__label" for="fm-tpye">Type</label>
-                        <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="fm-tpye">
-                            <li class="mdl-menu__item" data-val="security">Security</li>
-                            <li class="mdl-menu__item" data-val="solution">Solution</li>
-                            <li class="mdl-menu__item" data-val="traffic-management">Traffic Management</li>
+                    <div class="mdl-cell mdl-cell--4-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <button class="dropdown" md-icon-button id="type-menu-right">
+                            {{selectedTypeVal}}
+                            <md-icon>keyboard_arrow_down</md-icon>
+                        </button>
+                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                            data-mdl-for="type-menu-right">
+                            <li class="mdl-menu__item" (click)="setType('security', 'Security')">Security</li>
+                            <li class="mdl-menu__item" (click)="setType('solution', 'Solution')">Solution</li>
+                            <li class="mdl-menu__item" (click)="setType('traffic-management', 'Traffic Management')">Traffic Management</li>
                         </ul>
                     </div>
                 </form>

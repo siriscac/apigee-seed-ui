@@ -25,14 +25,23 @@
         </tbody>
     </table>
 
-    <div [hidden]="!authenticated || tasks.length > 0" class="message-container">
-        <h3><i class="material-icons">error_outline</i></h3><br>
-        <h4>Task list not available the selected org.</h4>
+    <p class="sub-message" align="center" [hidden]="!authenticated || tasks.length <= 0">Showing last 10 deployments for the selected org</p>
+
+
+    <div [hidden]="taskLoading">
+        <div [hidden]="(!authenticated || tasks.length > 0)" class="message-container">
+            <h3 style="color: #757575;"><i class="material-icons">error_outline</i></h3><br>
+            <h4 style="margin-top: 0; color: #757575; font-weight: 300">Task list not available the selected org.</h4>
+        </div>
+    </div>
+
+    <div class="message-container" [hidden]="!taskLoading">
+        <div class="mdl-spinner progress-circle mdl-spinner--single-color mdl-js-spinner is-active"></div>
     </div>
 </div>
 
 
 <div [hidden]="authenticated" class="message-container">
-    <h3><i class="material-icons">error_outline</i></h3><br>
-    <h4>You need to be logged in to view this page.</h4>
+    <h3 style="color: #757575;"><i class="material-icons">error_outline</i></h3><br>
+    <h4 style="margin-top: 0; color: #757575; font-weight: 300">You need to be logged in to view this page.</h4>
 </div>

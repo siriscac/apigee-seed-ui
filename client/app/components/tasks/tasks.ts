@@ -24,7 +24,7 @@ export class TaskComponent implements OnInit {
         this.taskService.getTasks()
             .then(tasks => {
                 this.tasks = tasks;
-                if (tasks.length < 0) {
+                if (this.tasks.length < 0 && this.authService.isAuthenticated()) {
                     this.taskService.fetchTasks(null);
                 }
             });
@@ -34,6 +34,9 @@ export class TaskComponent implements OnInit {
         return this.authService.isAuthenticated();
     }
 
+    get taskLoading() {
+        return this.taskService.getTaskLoading();
+    }
 
     statusTag(status) {
         if (status == "Success")

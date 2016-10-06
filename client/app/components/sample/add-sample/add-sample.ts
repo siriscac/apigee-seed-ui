@@ -27,6 +27,8 @@ export class AddSampleComponent {
     private sample: Sample;
     private sampleForm: FormGroup;
     private registryURL: string = Config.registryURL;
+    private selectedType: string = "security";
+    private selectedTypeKey: string = "Security";
 
 
     constructor(private http: Http, private authService: AuthService, private sampleService: SampleService, private formBuilder: FormBuilder, private router: Router, private toast: ToastService) {
@@ -55,6 +57,8 @@ export class AddSampleComponent {
 
     toggleGuide() {
         this.hide_form = this.hide_form == false;
+        var data: any = this.sampleForm.value;
+        console.log(data);
     }
 
     save() {
@@ -68,7 +72,7 @@ export class AddSampleComponent {
             });
         }
 
-        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '', vars, data.sampleType);
+        this.sample = new Sample('', '', data.name, data.description, '', data.gitURL, data.apiFolder, this.authService.getUserInfo(), '', vars, this.selectedTypeKey);
         this.toast.showToast("Creating sample - " + this.sample.name);
 
         this.sampleService.createSample(this.sample)
@@ -83,12 +87,21 @@ export class AddSampleComponent {
         this.redirectToSamples();
     }
 
+    get selectedTypeVal(){
+        return this.selectedTypeKey;
+    }
+
     doLogin() {
         this.authService.doLogin();
     }
 
     redirectToSamples() {
         this.router.navigate(['/samples']);
+    }
+
+    setType(val, key){
+        this.selectedType = val;
+        this.selectedTypeKey = key;
     }
 
     get authenticated() {

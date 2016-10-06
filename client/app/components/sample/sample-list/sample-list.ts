@@ -6,6 +6,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
 import {SampleService, Sample}   from '../../../services/sample';
+import {sample} from "rxjs/operator/sample";
 
 
 @Component({
@@ -51,5 +52,13 @@ export class SampleListComponent implements OnInit, OnDestroy {
     scrollTo(section) {
         console.log(section);
         document.getElementById(section).scrollIntoView();
+    }
+
+    subtitle(section) {
+        let st = "solution";
+        if (this.samples[section].length > 1) {
+            st = st + "s";
+        }
+        return this.samples[section].length + " " + st;
     }
 }

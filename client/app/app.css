@@ -190,6 +190,27 @@ md-card {
     display: none;
 }
 
+.mdl-textfield .mdl-button {
+    bottom: 0;
+}
+
+.mdl-button__fix{
+    position: relative;
+}
+
+.white__fix{
+    color: white !important;
+}
+
+.mdl-button {
+    min-width: 56px;
+}
+
+.li__item_act_btn {
+    bottom: 7px !important;
+    right: 7px !important;
+}
+
 .toolbar {
     top: 56px;
     left: 0px;

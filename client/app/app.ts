@@ -22,7 +22,9 @@ import {TaskService} from "./services/task-service";
 export class AppComponent {
     width: any;
     title = 'Samples';
+    notifCount: number = 0;
     notifItems: FirebaseListObservable<any[]>;
+
 
     constructor(private authService: AuthService, private windowSize: WindowSize, private router: Router, private taskService: TaskService, private af: AngularFire) {
         this.windowSize.width$.subscribe(width => {
@@ -42,7 +44,11 @@ export class AppComponent {
     }
 
     registerFirebaseRef(){
+        this.notifCount = 0;
         this.notifItems = this.af.database.list('registry/tasks/' + this.authService.getSelectedOrg() + "-" + this.authService.getSelectedEnv());
+        this.notifItems.subscribe(item => {
+            this.notifCount = item.length;
+        });
     }
 
     doLogin() {
@@ -64,6 +70,9 @@ export class AppComponent {
         this.registerFirebaseRef();
     }
 
+    get showNotif(){
+        return this.notifCount > 0;
+    }
     get authenticated() {
         return this.authService.isAuthenticated();
     }

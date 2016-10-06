@@ -159,7 +159,7 @@ export class AuthService {
                 .map(res => res.json())
                 .subscribe(info => {
                     this.userOrgs = info;
-                    if (!this.selectedOrg) {
+                    if (this.selectedOrg == null) {
                         this.selectedOrg = this.userOrgs.role[0].organization;
                         this.selectedEnv = "test";
                     }
